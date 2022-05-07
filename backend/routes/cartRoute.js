@@ -1,0 +1,15 @@
+const express = require('express')
+const { auth, authorizedRole } = require('../middleware/authorize')
+const router = new express.Router()
+const {addToCart} = require('../controllers/cart_controller/addToCart')
+const { incrementQty } = require('../controllers/cart_controller/incrementQty')
+const { decrementQty } = require('../controllers/cart_controller/decrementQty')
+const { removeFromCart } = require('../controllers/cart_controller/removeFromCart')
+const { getCartItems } = require('../controllers/cart_controller/getCartItems')
+
+router.post('/cart', auth, addToCart)
+router.post('/cart/increment', auth, incrementQty)
+router.post('/cart/decrement', auth, decrementQty)
+router.post('/cart/remove', auth, removeFromCart)
+router.get('/cart', auth, getCartItems)
+module.exports = router
