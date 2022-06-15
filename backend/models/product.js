@@ -49,6 +49,15 @@ const productSchema = new mongoose.Schema({
         }
     ],
 
+    related_products: [
+        {
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+            }
+        }
+    ],
+
     ratings : {
         type: Number,
         default: 0
@@ -63,7 +72,7 @@ const productSchema = new mongoose.Schema({
 
     numOfReviews : {
         type: Number,
-        deafult: 0
+        default: 0
     },
 
     reviews : [
@@ -71,7 +80,7 @@ const productSchema = new mongoose.Schema({
             user : {
                 type : mongoose.Schema.Types.ObjectId,
                 ref : 'User',
-                required : true
+                // required : true
             },
 
             name : {
@@ -120,6 +129,7 @@ productSchema.methods.toJSON = function () {
 
 productSchema.methods.setCategories = async function (reqBodyCategories) {
     const product = this
+    console.log('categories are', reqBodyCategories)
     // split the categories in parts which seperated by ,
     const reqCatgs = reqBodyCategories.split(',')
     // console.log('req cat is : ', reqCatgs)
@@ -130,6 +140,25 @@ productSchema.methods.setCategories = async function (reqBodyCategories) {
         //console.log(product.prod_categories.some(category => category.category.toHexString() === reqCat))
         if (!product.prod_categories.some(category => category.category.toHexString() === reqCat)) {
             product.prod_categories.push({ category: reqCat })
+        }
+        //console.log(product.prod_categories)
+    })
+    await product.save()
+    // console.log(product)
+}
+
+productSchema.methods.setRelatedProducts = async function (reqBodyProducts) {
+    const product = this
+    // split the categories in parts which seperated by ,
+    const reqProds = reqBodyProducts.split(',')
+    // console.log('req cat is : ', reqCatgs)
+    // Assign these value to product categories array
+    reqProds.forEach(reqProd => {
+        // console.log(reqCat)
+        // console.log(product.prod_categories)
+        //console.log(product.prod_categories.some(category => category.category.toHexString() === reqCat))
+        if (!product.related_products.some(prod => prod.product.toHexString() === reqProd)) {
+            product.related_products.push({ product: reqProd })
         }
         //console.log(product.prod_categories)
     })

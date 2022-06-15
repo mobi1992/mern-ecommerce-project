@@ -1,7 +1,8 @@
 const Product = require('../../models/product')
+const ErrorHander = require('../../utils/errorHandler')
 
 // Create new review or update the rewiew
-exports.createProductReview = async (req, res, next) => {
+exports.createProductReviewLoggedinUser = async (req, res, next) => {
     try {
         const { rating, comment, productId } = req.body
         const review = {
@@ -11,7 +12,9 @@ exports.createProductReview = async (req, res, next) => {
             comment
         }
         const product = await Product.findById(productId)
-
+        if (!product) {
+            next(new ErrorHander('No product found', 404))
+        }
         const isReviewed = product.reviews.find(rev => rev.user.toString() === req.user._id.toString())
         if (isReviewed) {
             product.reviews.forEach(rev => {

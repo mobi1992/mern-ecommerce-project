@@ -17,7 +17,7 @@ const router = new express.Router()
 
 router.post('/users/signup', signUpUser)
 router.post('/users/login', loginUser)
-router.post('/users/logout', auth, logoutUser)
+router.get('/users/logout', auth, logoutUser)
 router.post('/users/logoutAll', auth, logoutAll)
 router.post('/users/password/forgot', forgotPassword),
 router.put('/password/reset/:token', resetPassword)
@@ -28,4 +28,5 @@ router.get('/admin/users/all', auth, authorizedRole('admin'), getAllUsers)
 router.get('/admin/users/:id', auth, authorizedRole('admin'), getSingleUser)
 router.put('/admin/users/:id', auth, authorizedRole('admin'), updateUserRole)
 router.delete('/admin/users/:id', auth, authorizedRole('admin'), deleteUser)
+
 module.exports = router

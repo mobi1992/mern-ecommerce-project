@@ -7,8 +7,15 @@ exports.updateProduct = async (req, res, next) => {
         if (!product) {
             return next(new ErrorHandler('Product not found', 404))
         }
-
+        req.body.user = req.user.id
         product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true, useFindAndModify: false })
+        // req.body.user = req.user.id     //save the user id in req.body.user
+        if (req.body.categories) {
+            await product.setCategories(req.body.categories)
+        }
+        if (req.body.relatedProducts) {
+            await product.setRelatedProducts(req.body.relatedProducts)
+        }
         res.status(200).send({
             success: true,
             product

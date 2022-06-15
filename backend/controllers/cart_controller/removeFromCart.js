@@ -9,6 +9,7 @@ exports.removeFromCart = async(req, res, next) => {
             return next(new ErrorHandler('Cart not found!', 404))
         }
         await cart.removeFromTheCart(product)
+        await cart.calcTotalQtyAndPrice()
         res.status(200).send({
             success : true,
             message : 'Item has been successfully removed from the cart!',

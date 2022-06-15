@@ -7,10 +7,11 @@ exports.getCategoryProducts = async (req, res, next) => {
     try {
         const name = req.params.name
         const catg = await Category.findOne({name})
+        const productsCount = await Product.countDocuments({ "prod_categories.category": catg._id })
         if (!catg) {
             return next(new ErrorHandler('Category not found', 404))
         }
-        const resultPerPage = 10
+        const resultPerPage = 20
         // const productCount = await Product.countDocuments()
         // query for search
         let apiFeatures = new ApiFeatures(Product.find({ "prod_categories.category": catg._id }), req.query).search().filter()   // calling the class search method
@@ -19,7 +20,9 @@ exports.getCategoryProducts = async (req, res, next) => {
         let products = await apiFeatures.query
         res.status(200).send({
             success: true,
-            products
+            products,
+            resultPerPage,
+            productsCount
         })
     }
     catch (err) {

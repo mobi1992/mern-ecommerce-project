@@ -31,16 +31,36 @@ const userSchema = new mongoose.Schema({
         // select : false
     },
 
-    profile_pic: {
-        public_id: {
-            type: String,
-            required: true
-        },
-        url: {
-            type: String,
-            required: true
-        }
+    address : {
+        type : String,
+        trim : true
     },
+
+    city : {
+        type : String,
+        trim : true
+    },
+
+    province : {
+        type : String,
+        trim : true
+    },
+
+    postalCode : {
+        type : String,
+        trim : true
+    },
+
+    // profile_pic: {
+    //     public_id: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     url: {
+    //         type: String,
+    //         required: true
+    //     }
+    // },
 
     role: {
         type: String,
