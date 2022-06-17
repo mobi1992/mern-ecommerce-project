@@ -1,3 +1,4 @@
+import { Sync } from '@material-ui/icons'
 import axios from 'axios'
 
 // axios.defaults.baseURL = ''
@@ -13,4 +14,5 @@ export const apis = {
     writeReviewUnknownUser : async(name, productId, comment, rating) => axios.post('/product/review/unknown-user', {name, productId, comment, rating}),
     signup : async(userData) => axios.post('/users/signup', userData, {headers: { "Content-Type": "application/json" }}),
     logout : async() => axios.get('/users/logout', { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
+    updateProfile : async({name, email}) => axios.put('/update/me', {name, email}, { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}})
 }

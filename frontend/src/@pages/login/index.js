@@ -26,7 +26,7 @@ const LogIn = () => {
         if (event) {
            // console.log('backbutton clicked')
             // window.history.go()
-            window.location.reload()
+            window.location.reload(false)
         }
     }
     const navigate = useNavigate()

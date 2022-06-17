@@ -8,8 +8,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logoutuser } from '../../@actions/userActions/logout'
 
 const AccountLayout = ({ children }) => {
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const styleOptions = {
+        backgroundColor: '#ffe6f0',
+        height : window.innerHeight < '100vh' ? '100vh' : 'auto'
+    }
     const { logoutUser, loading, isAuthenticated, error } = useSelector(state => state.logoutUser)
     const logoutTheUser = () => {
         dispatch(logoutuser())
@@ -33,12 +39,12 @@ const AccountLayout = ({ children }) => {
         navigate(routePaths.addresses)
     }
     return (
-        <div style={{ backgroundColor: '#ffe6f0', height: '100vh' }}>
+        <div style={{ backgroundColor: '#ffe6f0', height: 'auto' }}>
             <br></br>
             <Container>
-                <Row className='justify-content-center'>
+                <Row className='justify-content-center' style={{paddingBottom : '350px'}}>
                     <Col lg='8' md='10' sm='11' xs='11'>
-                        <Card>
+                        <Card >
                             <Card.Body>
                                 <h3 style={{ fontWeight: 'bold', font: '900 3vh italic' }}>MY ACCOUNT</h3>
                                 <br></br>
@@ -62,7 +68,7 @@ const AccountLayout = ({ children }) => {
 
                                         <div onClick={linkToAccountDetails}>
                                             <Row>
-                                                <Col style={{ cursor: 'default' }}>Account Details</Col>
+                                                <Col lg = '8' md = '8' sm = '8' xs = '8' style={{ cursor: 'default' }}>Account Details</Col>
                                                 <Col style={{ display: 'flex', justifyContent: 'end' }}><AccountBox /></Col>
                                             </Row>
                                         </div>

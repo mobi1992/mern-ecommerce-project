@@ -13,3 +13,13 @@
 .my-account:focus {
     color : mediumaquamarine
 }
+
+.account_details {
+    margin-left: 20px;
+}
+@media screen and (max-width : 767px) {
+    .account_details {
+        margin-left: 0px;
+        margin-top: 50px;
+    }
+}

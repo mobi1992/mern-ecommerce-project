@@ -17,7 +17,8 @@ export const getCategoryItems = (name, currentPage = 1, sortBy = '') => async(di
     } catch (error) {
         dispatch({
             type : CATEGORY_ITEMS_FAILURE,
-            error : error.response
+            payload : error.response
         })
+        console.log(error)
     }
 }

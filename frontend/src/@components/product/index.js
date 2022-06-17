@@ -14,7 +14,7 @@ const ItemCard = ({ products, currentPage, setCurrentPageNo, productsCount, resu
     if (resultPerPage * currentPage < productsCount) {
         return (
             <>
-            <Row className='justify-content-left'>
+            <Row className='justify-content-left' style = {{paddingBottom : '300px'}}>
                 {products.map(product => {
                     return (
                         <Item product={product} />
@@ -29,7 +29,7 @@ const ItemCard = ({ products, currentPage, setCurrentPageNo, productsCount, resu
     else if (currentPage === 1) {
         return (
             <>
-            <Row className='justify-content-left'>
+            <Row className='justify-content-left' style = {{paddingBottom : '300px'}}>
                 {products.map(product => {
                     return (
                         <Item product={product} />

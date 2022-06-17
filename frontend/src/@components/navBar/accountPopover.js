@@ -14,10 +14,10 @@ const AccountPopover = ({userDetails}) => {
     // console.log('user details', userInfo.user)
   }, [userDetails])
 
-  if (userInfo) {
-    console.log('user details', userInfo.user.name)
+  // if (userInfo) {
+  //   console.log('user details', userInfo.user.name)
 
-  }
+  // }
 
   const logoutTheUser = () => {
     dispatch(logoutuser())

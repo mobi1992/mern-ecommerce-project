@@ -11,6 +11,7 @@ import { productReviewsLoggedinUserReducer } from './@reducers/product/productRe
 import {productReviewsUnknownUserReducer} from './@reducers/product/productReviewUnknownUserReducer'
 import { signUpReducer } from './@reducers/user/signUpReducer'
 import { logoutReducer } from './@reducers/user/logoutReducer'
+import { updateProfileReducer } from './@reducers/user/updateProfileReducer'
 
 const reducer = combineReducers({
     products : productReducer,
@@ -22,7 +23,8 @@ const reducer = combineReducers({
     reviewsLoggedinUser : productReviewsLoggedinUserReducer,
     reviewsUnknownUser : productReviewsUnknownUserReducer,
     userSignUp : signUpReducer,
-    logoutUser : logoutReducer
+    logoutUser : logoutReducer,
+    updatedUser : updateProfileReducer
 })
 let initialState = {}
 const middleware = [thunk]

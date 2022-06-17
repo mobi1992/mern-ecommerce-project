@@ -8,5 +8,7 @@ export const routePaths = {
     my_account : '/users/my-account',
     orders : '/users/my-account/orders',
     account_detail : '/users/my-account/account-details',
-    addresses : '/users/my-account/manage-addresses'
+    addresses : '/users/my-account/manage-addresses',
+    edit_details : '/users/my-account/edit-details',
+    password_update : '/users/password/update'
 }

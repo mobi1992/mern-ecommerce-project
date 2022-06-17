@@ -55,7 +55,7 @@ const SearchedProduct = () => {
     
     else {
         return (
-            <>
+            <div style = {{backgroundColor : '#ffe6f0'}}>
             <MetaData title = 'Rayon'/>
             {/* <Announcement /> */}
             { loading ? <Loader /> : <>
@@ -64,7 +64,7 @@ const SearchedProduct = () => {
             <ItemCard products={allProducts} currentPage = {currentPage} productsCount = {searchedProductsCount} resultPerPage = {resultPerPage} setCurrentPageNo = {setCurrentPageNo}/>
 
             </>}
-            </>
+            </div>
         )
     }
     

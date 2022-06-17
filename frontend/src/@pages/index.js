@@ -18,6 +18,7 @@ import Orders from './myAccount/orders'
 import AccountDetails from './myAccount/accountDetails'
 import SignUp from './signUp'
 import { routePaths } from '../@services/constants'
+import UpdateTheProfile from './myAccount/updateTheProfile'
 const MainApp = () => {
   // const navigate = useNavigate()
   // const [searchParams, setSearchParams] = useSearchParams()
@@ -32,7 +33,7 @@ const MainApp = () => {
   
   return (
     <>
-      
+      {loading === false &&
         <Router>
           <Announcement />
           <NavBar userDetails={userDetails} />
@@ -44,14 +45,14 @@ const MainApp = () => {
             <Route exact path={routePaths.searched_product} element={<SearchedProduct />} />
             <Route exact path={routePaths.login} element={<LogIn />} />
             <Route exact path={routePaths.signup} element={<SignUp />} />
-            <Route exact path={routePaths.my_account} element={isAuthenticated ? <MyAccount userDetails={userDetails}/> : <LogIn />} />
+            <Route exact path={routePaths.my_account} element={isAuthenticated === true && loading === false ? <MyAccount userDetails={userDetails}/> : <LogIn />} />
             <Route exact path={routePaths.orders} element={isAuthenticated ? <Orders userDetails={userDetails}/> : <LogIn />} />
             <Route exact path={routePaths.addresses} element={isAuthenticated ? <Addresses userDetails={userDetails}/> : <LogIn />} />
             <Route exact path={routePaths.account_detail} element={isAuthenticated ? <AccountDetails userDetails={userDetails}/> : <LogIn />} />
-
+            <Route exact path={routePaths.edit_details} element={isAuthenticated ? <UpdateTheProfile userDetails = {userDetails}/> : <LogIn />}/>
           </Routes>
         </Router>
-     
+}
     </>
   )
 }
