@@ -17,24 +17,25 @@ import ReviewCard from '../../@components/reviewCard'
 import aloevera_soap from '../../@assets/images/Aloevera_Soap.jpeg'
 import AddReview from '../../@components/addReview'
 import AddReviewUnknownUser from '../../@components/addReviewUnknownUser'
-const ProductDetail = ({userDetails}) => {
+import CartLoggedInUser from './cartLoggedInUser'
+import CartUnknownUser from './cartUnknownUser'
+const ProductDetail = ({userDetails, isAuthenticated}) => {
 
-    //reload the page when backbutton is clicked
-    // window.onpopstate = function (event) {
-    //     if (event) {
-    //         //console.log('backbutton clicked')
-    //         // window.history.go()
-    //         window.location.reload(false)
-    //     }
-    // }
+   // reload the page when backbutton is clicked
+    window.onpopstate = function (event) {
+        if (event) {
+            //console.log('backbutton clicked')
+            // window.history .go()
+            window.location.reload(false)
+        }
+    }
 
     console.log("user details", userDetails)
     const { id } = useParams()
     console.log(id)
     const dispatch = useDispatch()
     const { loading, error, code, product } = useSelector(state => state.product)
-    const [cartCon, showCartCon] = useState(false)
-    const [quantity, setQuantity] = useState(1)
+    const [prod, setProd] = useState({})
     const [addReview, setAddReview] = useState(false)
     const options = {
         edit: false,
@@ -50,23 +51,10 @@ const ProductDetail = ({userDetails}) => {
         dispatch(getProductDetail(id))
     }, [dispatch])
 
-
-    const incrementQuantity = () => {
-        if (quantity !== '') {
-            setQuantity(prevQty => prevQty + 1)
-        }
-    }
-
-    const decrementQuantity = () => {
-        if (quantity >= 2) {
-            setQuantity(prevQty => prevQty - 1)
-        }
-    }
-
-    const handleChange = (e) => {
-        setQuantity(e.target.value)
-    }
-
+    useEffect(() => {
+        setProd(product)
+    }, [product])
+    
     const priceStyle = {
         color: '#5b18b0',
         fontWeight: 'bold',
@@ -112,12 +100,14 @@ const ProductDetail = ({userDetails}) => {
                                             <p style={{ display: 'inline' }}>Product Code : </p>
                                             <p style={{ color: 'grey', display: 'inline', fontWeight: 'bold' }}>{product._id}</p>
                                         </div>
+                                        <hr></hr>
                                         <a href = "#reviews" style = {{ textDecoration : 'none'}}>
                                         <div>
                                             <ReactStars {...options} /><p style = {{display : 'inline'}}>{Math.round(product.ratings * 10)/10}/5 based on </p>
                                             <span>({product.numOfReviews} Reviews)</span>
                                         </div>
                                         </a>
+                                        <hr></hr>
                                         <div className='mb-3'>
                                             <h2 className='responsive-content-heading'>Description:</h2>
                                             <p style={{ color: 'grey', display: 'inline', fontWeight: 'bold' }}>{product.description}</p>
@@ -125,24 +115,7 @@ const ProductDetail = ({userDetails}) => {
                                         </div>
                                     </Card.Body>
                                 </Card>
-                                <Row style={{ marginLeft: '0.5vw' }} className='main'>
-                                    <Col>
-                                        <InputGroup className="mb-3">
-                                            <InputGroup.Text style={{ cursor: 'default' }} onClick={decrementQuantity} id="basic-addon2">-</InputGroup.Text>
-                                            <FormControl className='text-center' type="number"
-                                                aria-label="text" aria-describedby="basic-addon2" onChange={handleChange} value={quantity}
-                                            />
-                                            <InputGroup.Text style={{ cursor: 'default' }} onClick={incrementQuantity} id="basic-addon2">+</InputGroup.Text>
-                                        </InputGroup>
-                                    </Col>
-                                    <Col style={{ display: 'inline' }}>
-                                        <Link to={`/${product._id}`}>
-                                            <div onClick={() => showCartCon(true)}>
-                                                <Button variant='dark' id={product._id} className='btn responsive-content-item btn-item'>Add To Cart</Button>
-                                            </div>
-                                        </Link>
-                                    </Col>
-                                </Row>
+                                {isAuthenticated === true ? <CartLoggedInUser prod = {prod}/> : <CartUnknownUser prod = {prod}/>}
                             </Col>
                         </Row>
                         <hr></hr>

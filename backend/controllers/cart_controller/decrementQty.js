@@ -10,7 +10,10 @@ exports.decrementQty = async (req, res, next) => {
         }
         // if the product already exists in the cart, update its quantity by 1
         const itemIndex = cart.cartItems.findIndex(prod => prod.product.toString() === product)
-        if (itemIndex > -1) {
+        if(itemIndex <= -1) {
+            return next(new ErrorHandler('Item not found', 404))
+        }
+        else {
             let item = cart.cartItems[itemIndex]
             item.quantity = item.quantity - 1
             cart.cartItems[itemIndex] = item

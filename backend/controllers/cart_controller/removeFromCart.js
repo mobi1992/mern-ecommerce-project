@@ -8,6 +8,10 @@ exports.removeFromCart = async(req, res, next) => {
         if (!cart) {
             return next(new ErrorHandler('Cart not found!', 404))
         }
+        const index = cart.cartItems.findIndex(prod => prod.product.toString() === product)
+        if (index <= -1) {
+            return next(new ErrorHandler('Item not found', 404))
+        } 
         await cart.removeFromTheCart(product)
         await cart.calcTotalQtyAndPrice()
         res.status(200).send({

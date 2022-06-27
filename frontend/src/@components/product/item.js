@@ -15,15 +15,16 @@ const Item = ({ product }) => {
         size: window.innerWidth < 600 ? 20 : 25,
         isHalf: true
     }
-    const refresh = () => {
-        navigate(`/Products/${product._id}`)
-        window.location.reload(false)
-    }
-    const navigate = useNavigate()
+    // const refresh = () => {
+    //     navigate(`/Products/${product._id}`)
+    //     window.location.reload(false)
+    // }
+    // const navigate = useNavigate()
     // console.log(product)
     return (
         <Col style={{ marginTop: '1vh' }} lg='3' md='4' sm='6' xs='6'>
-                <Card onClick = {refresh} className='border-0 mt-2 card-product'>
+            <Link style = {{textDecoration : 'none', color : 'black'}} to = {`/Products/${product._id}`}>
+                <Card  className='border-0 mt-2 card-product'>
                     <div className='card-image-con'>
                         <div className='product-image-wrapper'>
                             <Image src={aloervera_soap} className='card-img img-responsive square-img' />
@@ -80,7 +81,7 @@ const Item = ({ product }) => {
                     </div>
                     <h6 className='text-center text-muted'>Rs {product.price}</h6>
                 </Card>
-
+                </Link>
         </Col>
     )
 }

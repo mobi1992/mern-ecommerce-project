@@ -11,6 +11,12 @@ import './index.css';
 import Error from '../../@components/error'
 
 const Home = () => {
+    window.onpopstate = function (event) {
+        if (event) {
+            
+            window.location.reload(false)
+        }
+    }
     const [currentPage, setCurrentPage] = useState(1)
     const setCurrentPageNo = () => {
         setCurrentPage(page => page + 1)

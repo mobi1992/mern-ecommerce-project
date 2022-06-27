@@ -78,9 +78,10 @@ const SignUp = () => {
           <Link to={routePaths.login}>
             <div className='mt-4 text-center'>Already have an account? Log in</div>
           </Link>
-          {error ? <p className='text-center text-danger'>{error}</p> : null}
+          
           <Card className='mt-3'>
             <Card.Body>
+            {error && <p className='text-center text-danger'>{error}</p>}
               <h1 style={{ font: '900 4vh italic' }} className='mb-3'>Create An Account</h1>
               <Formik initialValues={initialValues}
                 onSubmit={signupUser}
@@ -133,9 +134,7 @@ const SignUp = () => {
                     </Form.Group>
                     {(errors.email && touched.email) && <div> <div className='text-danger text-center'>{errors.email}</div> <br></br></div>} */}
 
-                    <Link to={'/users/signUp'}>
-                      <div className='mt-3'>Forgot Password?</div>
-                    </Link>
+                    
                     <Row className='mt-4 row justify-content-center align-items-center'>
                       <Col></Col>
                       <Col>

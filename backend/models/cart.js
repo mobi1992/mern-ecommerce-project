@@ -23,7 +23,11 @@ const cartSchema = new mongoose.Schema({
             type : mongoose.Schema.ObjectId,
             ref : 'Product',
             required : true 
-        } 
+        },
+        productStock : {
+            type : Number,
+            required : true
+        }
     }
     ],
 

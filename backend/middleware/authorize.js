@@ -33,7 +33,7 @@ exports.auth = async (req, res, next) => {
     try {
         // get the token from request header
         const _token = req.header('Authorization')  // we have to trim Bearer from the token, we can use trim methods on string as well but here we are using replace method, and replacing Bearer with an empty string
-        console.log(_token)
+        // console.log(_token)
         if(!_token) {
             return next(new ErrorHander('Please login to access this resource!', 401))
         }

@@ -7,12 +7,14 @@ const userRouter = require('./routes/userRoute')
 const adminRoute = require('./routes/adminRoute')
 const errorMiddleware = require('./middleware/error')
 const cartRoute = require('./routes/cartRoute')
+const cartRoute2 = require('./routes/cartRoute2')
 const orderRoute = require('./routes/orderRoute')
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const cloudinary = require('cloudinary')
 const path = require("path");
-
+const MongoStore = require('connect-mongo');
+const session = require('express-session')
 // Config
 if (process.env.NODE_ENV !== "PRODUCTION") {
     require("dotenv").config({ path: "backend/config/config.env" });
@@ -23,6 +25,16 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URL
+    }),
+    cookie: {maxAge: 2 * 60 * 1000}
+}));
+
 //Handling uncaught exception
 process.on('uncaughtException', err => {
     console.log(`Error : ${err.message}`)
@@ -34,6 +46,7 @@ app.use(categoryRouter)
 app.use(userRouter)
 app.use(adminRoute)
 app.use(cartRoute)
+app.use(cartRoute2)
 app.use(orderRoute)
 
 app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -43,7 +56,10 @@ app.get("*", (req, res) => {
 });
 
 app.use(errorMiddleware)
-
+// app.use(function(req, res, next) {
+//     res.locals.session = req.session;
+//     next();
+//  });
 // cloudinary config
 cloudinary.config({
     cloud_name : process.env.CLOUDINARY_NAME,

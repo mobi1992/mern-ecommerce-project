@@ -10,5 +10,10 @@ export const routePaths = {
     account_detail : '/users/my-account/account-details',
     addresses : '/users/my-account/manage-addresses',
     edit_details : '/users/my-account/edit-details',
-    password_update : '/users/password/update'
+    password_update : '/users/password/update',
+    forget_password : '/users/forget/password',
+    reset_password : '/password/reset/:token',
+    mainCartUnk : '/cart',
+    mainCart : '/your/cart',
+    checkout : '/checkout'
 }

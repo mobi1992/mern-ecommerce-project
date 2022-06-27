@@ -5,7 +5,8 @@ const ApiFeatures = require('../../utils/apiFeatures')
 
 exports.addToCart = async (req, res, next) => {
     try {
-        const { name, price, quantity, image, product } = req.body
+        const { name, price, quantity, image, product, productStock } = req.body
+        console.log(req.body)
         let cart = await Cart.findOne({ user: req.user._id })
         if (cart) {
             // if the product already exists in the cart, update its quantity
@@ -17,7 +18,7 @@ exports.addToCart = async (req, res, next) => {
                 
             }
             else {
-                cart.cartItems.push({ name, price, quantity, image, product })
+                cart.cartItems.push({ name, price, quantity, image, product, productStock })
             }
             await cart.calcTotalQtyAndPrice()
             await cart.save()
@@ -29,18 +30,18 @@ exports.addToCart = async (req, res, next) => {
         }
         // if cart does not exist the create new cart
         else {
-            const newCart = await Cart.create({
+            cart = await Cart.create({
                 user: req.user._id,
                 cartItems: [{ name, price, quantity, image, product }],
                 totalIndQuantity: quantity,
                 totalIndPrice: price
             })
-            await newCart.calcTotalQtyAndPrice()
-            await newCart.save()
+            await cart.calcTotalQtyAndPrice()
+            await cart.save()
             res.status(201).send({
                 success: true,
                 message: 'Item has been successfully added to cart!',
-                newCart
+                cart
             })
         }
     }

@@ -10,7 +10,8 @@ exports.getCartItems = async (req, res, next) => {
         if(cart.cartItems.length === 0){
             return res.status(200).send({
                 success : true,
-                message : 'Your cart is empty now!'
+                message : 'Your cart is empty now!',
+                cart
             })
         }
         res.status(200).send({
