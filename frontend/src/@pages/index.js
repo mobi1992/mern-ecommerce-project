@@ -27,7 +27,8 @@ import { loggedinUserGetCart } from '../@actions/loggedinUserCartActions/getCart
 import NavBar2 from '../@components/navBarNoCart'
 import MainCartContainer from './unknownUserMainCart'
 import MainCartContainer2 from './mainCart'
-import Checkout from './checkout'
+import CheckoutUnk from './checkoutUnkUser'
+import Checkout from './checkoutLoggedinUser'
 const MainApp = () => {
   // const navigate = useNavigate()
   // const [searchParams, setSearchParams] = useSearchParams()
@@ -78,9 +79,12 @@ const MainApp = () => {
             <Route exact path={routePaths.password_update} element={isAuthenticated ? <UpdateThePassword userDetails = {userDetails}/> : <LogIn />}/>
             <Route exact path={routePaths.forget_password} element={<ForgetThePassword />}/>
             <Route exact path={routePaths.reset_password} element={<ResetThePassword />}/>
-            <Route exact path={routePaths.mainCartUnk} element={<MainCartContainer />} />
-            <Route exact path={routePaths.mainCart} element={<MainCartContainer2 />}/>
-            <Route exact path={routePaths.checkout} element={<Checkout />}/>
+            <Route exact path={routePaths.mainCart} element={isAuthenticated ? <MainCartContainer2 /> : <MainCartContainer />} />
+            {/* <Route exact path={routePaths.mainCart} element={<MainCartContainer2 />}/> */}
+            <Route exact path={routePaths.checkout} element={getCartItemsUnknownUserSuccess ? <CheckoutUnk /> : <MainCartContainer />}/>
+            <Route exact path={routePaths.checkout} element={getCartItemsLoggedinUserSuccess ? <Checkout /> : <MainCartContainer2 />}/>
+            <Route exact path={routePaths.checkout} element={isAuthenticated ? <Checkout /> : <CheckoutUnk />}/>
+            
           </Routes>
           
         </Router>

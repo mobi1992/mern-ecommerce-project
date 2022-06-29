@@ -22,13 +22,13 @@ import CartUnknownUser from './cartUnknownUser'
 const ProductDetail = ({userDetails, isAuthenticated}) => {
 
    // reload the page when backbutton is clicked
-    window.onpopstate = function (event) {
-        if (event) {
-            //console.log('backbutton clicked')
-            // window.history .go()
-            window.location.reload(false)
-        }
-    }
+    // window.onpopstate = function (event) {
+    //     if (event) {
+    //         //console.log('backbutton clicked')
+    //         // window.history .go()
+    //         window.location.reload(false)
+    //     }
+    // }
 
     console.log("user details", userDetails)
     const { id } = useParams()

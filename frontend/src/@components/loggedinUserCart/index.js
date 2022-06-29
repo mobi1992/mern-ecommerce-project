@@ -141,9 +141,9 @@ const CartContainer = ({ onCloseCart, msg }) => {
                             </Row>
                             <div className='mb-2 d-grid gap-2'>
                                 {showUpdateCartButton && <Button onClick = {updateCart} size='lg'className='updated-cart responsive-content-cart-button'>Update The Cart</Button>}
-                                <Button onClick={() => navigate(routePaths.mainCart)} size='lg' className='cart-btn responsive-content-cart-button'>View The Cart</Button>
-                                <Button onClick={() => navigate(routePaths.allProducts)} size='lg' className='cart-btn responsive-content-cart-button'>Continue Shopping</Button>
-                                <Button onClick={() => navigate('/checkout')} size='lg' className='cart-btn responsive-content-cart-button'>Checkout</Button>
+                                <Button as = {Link} to = {routePaths.mainCart} size='lg' className='cart-btn responsive-content-cart-button'>View The Cart</Button>
+                                <Button as = {Link} to = {routePaths.allProducts} size='lg' className='cart-btn responsive-content-cart-button'>Continue Shopping</Button>
+                                <Button as = {Link} to = {routePaths.checkout} size='lg' className='cart-btn responsive-content-cart-button'>Checkout</Button>
                             </div>
                         </Col>
                     </Row>

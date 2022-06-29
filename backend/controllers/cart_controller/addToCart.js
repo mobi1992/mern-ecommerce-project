@@ -5,8 +5,9 @@ const ApiFeatures = require('../../utils/apiFeatures')
 
 exports.addToCart = async (req, res, next) => {
     try {
+
         const { name, price, quantity, image, product, productStock } = req.body
-        console.log(req.body)
+        console.log('req body is ', req.body)
         let cart = await Cart.findOne({ user: req.user._id })
         if (cart) {
             // if the product already exists in the cart, update its quantity
@@ -32,7 +33,7 @@ exports.addToCart = async (req, res, next) => {
         else {
             cart = await Cart.create({
                 user: req.user._id,
-                cartItems: [{ name, price, quantity, image, product }],
+                cartItems: [{ name, price, quantity, image, product, productStock }],
                 totalIndQuantity: quantity,
                 totalIndPrice: price
             })

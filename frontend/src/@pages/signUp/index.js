@@ -11,7 +11,8 @@ import { signUpUser } from '../../@actions/userActions/signup'
 import { routePaths } from '../../@services/constants'
 
 const initialValues = {
-  name: '',
+  firstName: '',
+  lastName : '',
   email: '',
   password: '',
   confirmPassword: ''
@@ -22,7 +23,8 @@ const formValues = values => {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('This Field is Required'),
+  firstName: Yup.string().required('This Field is Required'),
+  lastName: Yup.string().required('This Field is Required'),
   email: Yup.string().email('Invalid Email Format').required('This Field is Required'),
   password: Yup.string().min('8').required('Please enter a password with min 8 characters'),
   confirmPassword: Yup.string().required('Please confirm your password').oneOf([Yup.ref('password'), null], 'Passwords do not match'),
@@ -52,16 +54,18 @@ const SignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {isAuthenticated, loading, error, userSignUp} = useSelector(state => state.userSignUp)
-  const signupUser = ({name, email, password}) => {
+  const signupUser = ({firstName ,lastName, email, password}) => {
   //   const URL_images = images.slider_images.map(image => {
   //     return URL.createObjectURL(image)
   // })
   const formData = new FormData();
         // formData.append('avatar', image)
-        formData.append('name', name)
+        formData.append('firstName', firstName)
+        formData.append('lastName', lastName)
+
         formData.append('email', email)
         formData.append('password', password)
-    console.log(name, email, password)
+        console.log('signup form', formData)
     dispatch(signUpUser(formData))
   }
   useEffect(() => {
@@ -89,10 +93,16 @@ const SignUp = () => {
                 {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
                   <Form onSubmit={handleSubmit}>
                     <Form.Group>
-                      <label htmlFor='name'>Name</label>
-                      <Form.Control type='text' id='name' name='name' value={values.name} onChange={handleChange} onBlur={handleBlur} />
+                      <label htmlFor='firstName'>First Name</label>
+                      <Form.Control type='text' id='firstName' name='firstName' value={values.firstName} onChange={handleChange} onBlur={handleBlur} />
                     </Form.Group>
-                    {(errors.name && touched.name) && <div> <div className='text-danger text-center'>{errors.name}</div> <br></br></div>}
+                    {(errors.firstName && touched.firstName) && <div> <div className='text-danger text-center'>{errors.firstName}</div> <br></br></div>}
+
+                    <Form.Group>
+                      <label htmlFor='lastName'>Last Name</label>
+                      <Form.Control type='text' id='lastName' name='lastName' value={values.lastName} onChange={handleChange} onBlur={handleBlur} />
+                    </Form.Group>
+                    {(errors.lastName && touched.lastName) && <div> <div className='text-danger text-center'>{errors.lastName}</div> <br></br></div>}
 
                     <Form.Group>
                       <label htmlFor='email'>Email Address</label>

@@ -1,13 +1,13 @@
 import { UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE } from "../../@constants/userConstants";
 import { apis } from "../../@services/apis";
 
-export const updateUserProfile = ({name, email}) => async(dispatch) => {
+export const updateUserProfile = ({firstName, lastName, email}) => async(dispatch) => {
     try {
         dispatch({
             type : UPDATE_PROFILE_REQUEST
         })
 
-        const {data} = await apis.updateProfile({name, email})
+        const {data} = await apis.updateProfile({firstName, lastName, email})
 
         dispatch({
             type : UPDATE_PROFILE_SUCCESS,

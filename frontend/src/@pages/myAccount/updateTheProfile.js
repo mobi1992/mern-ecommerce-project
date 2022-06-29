@@ -13,12 +13,14 @@ const UpdateTheProfile = ({ userDetails }) => {
     const dispatch = useDispatch()
     const { loading, isAuthenticated, error, updatedUser } = useSelector(state => state.updatedUser)
     const initialValues = {
-        name: userDetails.user.name,
+        firstName: userDetails.user.firstName,
+        lastName: userDetails.user.lastName,
         email: userDetails.user.email,
     }
 
     const validationSchema = Yup.object({
-        name: Yup.string().required('This field is required'),
+        firstName: Yup.string().required('This field is required'),
+        lastName: Yup.string().required('This field is required'),
         email: Yup.string().email('Invalid Email Format').required('This Field is Required'),
     })
 
@@ -29,8 +31,8 @@ const UpdateTheProfile = ({ userDetails }) => {
         }
     }, [isAuthenticated])
 
-    const editAccountDetails = ({ name, email }) => {
-        dispatch(updateUserProfile({ name, email }))
+    const editAccountDetails = ({ firstName, lastName, email }) => {
+        dispatch(updateUserProfile({ firstName, lastName, email }))
     }
     return (
         <>
@@ -43,11 +45,16 @@ const UpdateTheProfile = ({ userDetails }) => {
                         {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group>
-                                    <label htmlFor='name'>Name</label>
-                                    <Form.Control type='text' id='name' name='name' value={values.name} onChange={handleChange} onBlur={handleBlur} />
+                                    <label htmlFor='firstName'>First Name</label>
+                                    <Form.Control type='text' id='firstName' name='firstName' value={values.firstName} onChange={handleChange} onBlur={handleBlur} />
                                 </Form.Group>
-                                {(errors.name && touched.name) && <div className='text-danger text-center'>{errors.name}</div>}
-                                <br></br>
+                                {(errors.firstName && touched.firstName) && <div> <div className='text-danger text-center'>{errors.firstName}</div> <br></br></div>}
+
+                                <Form.Group>
+                                    <label htmlFor='lastName'>Last Name</label>
+                                    <Form.Control type='text' id='lastName' name='lastName' value={values.lastName} onChange={handleChange} onBlur={handleBlur} />
+                                </Form.Group>
+                                {(errors.lastName && touched.lastName) && <div> <div className='text-danger text-center'>{errors.lastName}</div> <br></br></div>}
                                 <Form.Group>
                                     <label htmlFor='email'>Email Address</label>
                                     <Form.Control type='text' id='email' name='email' value={values.email} onChange={handleChange} onBlur={handleBlur} />

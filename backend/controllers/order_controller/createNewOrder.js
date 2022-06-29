@@ -25,6 +25,7 @@ exports.newOrder = async(req,res,next) => {
             paidAt : Date.now(),
             user : req.user._id
         })
+        await order.generateOrderNo()
         res.status(201).send({
             success : true,
             order

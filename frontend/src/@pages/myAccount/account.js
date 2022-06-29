@@ -28,7 +28,7 @@ const linkToAddresses = () => {
     <AccountLayout>
       <div className='account_details'>
       <div>
-        <p style={{ display: 'inline' }}>Hello</p> <p style={{ fontWeight: 'bolder', display: 'inline' }}>{userDetails.user.name} !</p>
+        <p style={{ display: 'inline' }}>Hello</p> <p style={{ fontWeight: 'bolder', display: 'inline' }}>{userDetails.user.firstName} !</p>
       </div>
       <p style={{ display: 'inline' }}>From your account dashboard you will be able to view </p> <p className='my-account' style={{ display: 'inline' }} onClick = {linkToOrders}> recent orders</p>, <p style={{ display: 'inline' }}>manage your </p> <p className='my-account' style={{ display: 'inline' }} onClick = {linkToAddresses}>addresses</p><p style={{ display: 'inline' }}>, and edit your </p> <p className='my-account' style={{ display: 'inline' }} onClick = {linkToAccountDetails}>account details</p><p style={{ display: 'inline' }}> and </p> <p className='my-account' style={{ display: 'inline' }} onClick = {linkToAccountDetails}>passwords</p>
       </div>

@@ -1,12 +1,19 @@
 const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
-    shippingInfo: {
-        name: {
-            type: String,
-            required: [true, 'Please enter your name.']
-        },
+    orderNo : {
+        type : String
+    },
 
+    shippingInfo: {
+        firstName: {
+            type: String,
+            required: [true, 'Please enter your first name.']
+        },
+        lastName: {
+            type: String,
+            required: [true, 'Please enter your last name.']
+        },
         address: {
             type: String,
             required: [true, 'Please enter your address.']
@@ -61,6 +68,10 @@ const orderSchema = new mongoose.Schema({
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'Product',
                     required: true
+                },
+                productStock: {
+                    type : Number,
+                    required : true
                 }
             }
         ],
@@ -123,6 +134,12 @@ const orderSchema = new mongoose.Schema({
     {
         timestamps: true
     })
-
+orderSchema.methods.generateOrderNo = async function() {
+    const order = this
+    const orderNo = Math.floor(Math.random() * 100000000);
+    const orderNum = orderNo.toString()
+    order.orderNo = 'RY-' + orderNum
+    await order.save()
+}
 const Order = mongoose.model('Order', orderSchema)
 module.exports = Order

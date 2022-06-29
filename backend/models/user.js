@@ -7,11 +7,19 @@ const jwt = require('jsonwebtoken')
 const ErrorHander = require('../utils/errorHandler')
 
 const userSchema = new mongoose.Schema({
-    name: {
+    firstName: {
         type: String,
-        required: [true, 'Please enter username'],
+        required: [true, 'Please enter your first name'],
         maxlength: [30, 'Name cannot exceed 30 characters'],
-        minlength: [4, 'Name shoudl hab=ve more than 4 characters'],
+        minlength: [4, 'Name shoudl have more than 4 characters'],
+        trim: true
+    },
+
+    lastName: {
+        type: String,
+        required: [true, 'Please enter your last name'],
+        maxlength: [30, 'Name cannot exceed 30 characters'],
+        minlength: [4, 'Name shoudl have more than 4 characters'],
         trim: true
     },
 

@@ -8,9 +8,9 @@ exports.signUpUser = async (req, res, next) => {
         //     width : 300,
         //     crop : 'scale'
         // })
-        const { name, email, password } = req.body
+        const { firstName, lastName,  email, password } = req.body
         const user = await User.create({
-            name, email, password,
+            firstName, lastName, email, password,
             // profile_pic: {
             //     public_id : myCloud.public_id,
             //     url : myCloud.secure_url

@@ -24,25 +24,16 @@ exports.createProduct = async (req, res, next) => {
         // }
 
         // req.body.images = imagesLinks
-        console.log(req.file)
-        const myCloud = await cloudinary.v2.uploader.upload(req.file.buffer, {
-            folder : 'products',
-            width : 300,
-            crop : 'scale '
-        })
+        // console.log(req.file)
+        // const myCloud = await cloudinary.v2.uploader.upload(req.file.buffer, {
+        //     folder : 'products',
+        //     width : 300,
+        //     crop : 'scale '
+        // })
         // console.log(req.body)
         req.body.user = req.user.id     //save the user id in req.body.user
-        const {name, price, description, ingredients} = req.body
-        const product = await Product.create({
-            name,
-            price,
-            description,
-            ingredients,
-            images : {
-                public_id : myCloud.public_id,
-                url : myCloud.secure_url
-            }
-        })
+        // const {name, price, description, ingredients, images} = req.body
+        const product = await Product.create(req.body)
         if (req.body.categories){
         await product.setCategories(req.body.categories)
         }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const cartSchema = new mongoose.Schema({
+const cartSchema2 = new mongoose.Schema({
     cartItems : [ 
         {
         name : {
@@ -65,7 +65,7 @@ const cartSchema = new mongoose.Schema({
 //     await cart.save()
 // }
 
-cartSchema.methods.calcTotalQtyAndPrice = async function () {
+cartSchema2.methods.calcTotalQtyAndPrice = async function () {
     const cart = this
     let sum = 0
     let qty = 0
@@ -78,11 +78,11 @@ cartSchema.methods.calcTotalQtyAndPrice = async function () {
     //  await cart.save()
 } 
 
-cartSchema.methods.removeFromTheCart = async function(prod) {
+cartSchema2.methods.removeFromTheCart = async function(prod) {
     const cart = this
     const filteredProducts = cart.cartItems.filter(item => item.product.toString() !== prod)
     cart.cartItems = filteredProducts
     // await cart.save()
 }
-const Cart2 = mongoose.model('Cart2', cartSchema)
+const Cart2 = mongoose.model('Cart2', cartSchema2)
 module.exports = Cart2

@@ -13,7 +13,6 @@ export const routePaths = {
     password_update : '/users/password/update',
     forget_password : '/users/forget/password',
     reset_password : '/password/reset/:token',
-    mainCartUnk : '/cart',
     mainCart : '/your/cart',
     checkout : '/checkout'
 }

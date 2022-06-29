@@ -3,7 +3,8 @@ const User = require('../../models/user')
 exports.updateProfile = async (req, res, next) => {
     try {
         const userData = {
-            name: req.body.name,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             email: req.body.email
         }
         // leave cloudinary for now  

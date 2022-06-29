@@ -30,7 +30,7 @@ const AccountPopover = ({userDetails}) => {
       {userInfo ?
         <div className='popover_content'>
          <Link style = {{color : 'black', textDecoration : 'none'}} to = {routePaths.my_account}>
-         <div  style={{ marginBottom: '1vh', cursor : 'pointer' }}>Hi {userInfo.user.name}</div>
+         <div  style={{ marginBottom: '1vh', cursor : 'pointer' }}>Hi {userInfo.user.firstName}</div>
          </Link>
           <div onClick = {logoutTheUser} style = {{cursor : 'pointer'}}>Logout</div>
         </div> :

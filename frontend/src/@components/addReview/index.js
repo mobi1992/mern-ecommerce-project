@@ -30,7 +30,7 @@ const handleRatingsChange = (newRating) => {
     setRatingError(false)
     setRating(newRating)
 }
-    const addReview = ({ comment }) => {
+    const addReview = async ({ comment }) => {
         // if no rating is given, return without submitting
         if (rating === 0) {
             setRatingError(true)
@@ -38,7 +38,8 @@ const handleRatingsChange = (newRating) => {
         }
 
         console.log('the comment is : ', comment, rating)
-        dispatch(productReviewsLoggedinUser(productId, comment, rating))
+        await dispatch(productReviewsLoggedinUser(productId, comment, rating))
+        window.location.reload(false)
     }
     return (
         <>

@@ -17,7 +17,7 @@ const AccountDetails = ({ userDetails }) => {
       <AccountLayout>
         <div className='account_details'>
           <h5 style={{ fontWeight: 'bold' }}>Full Name</h5>
-          <p>{userDetails.user.name}</p>
+          <p>{userDetails.user.firstName} {userDetails.user.lastName}</p>
           <br></br>
 
           <h5 style={{ fontWeight: 'bold' }}>Email</h5>

@@ -32,7 +32,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URL
     }),
-    cookie: {maxAge: 2 * 60 * 1000}
+    cookie: {maxAge: 10 * 60 * 1000}
 }));
 
 //Handling uncaught exception
