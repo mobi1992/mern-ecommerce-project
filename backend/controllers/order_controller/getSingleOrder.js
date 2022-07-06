@@ -4,10 +4,7 @@ const ErrorHandler = require('../../utils/errorHandler')
 
 exports.getSingleOrder = async(req,res,next) => {
     try {
-        const order = await Order.findById(req.params.id).populate(
-            "user",
-            "name email"
-          );
+        const order = await Order.findById(req.params.id)
         
           if (!order) {
             return next(new ErrorHandler("Order not found with this Id", 404));

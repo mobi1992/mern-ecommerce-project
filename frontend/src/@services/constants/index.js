@@ -14,5 +14,6 @@ export const routePaths = {
     forget_password : '/users/forget/password',
     reset_password : '/password/reset/:token',
     mainCart : '/your/cart',
-    checkout : '/checkout'
+    checkout : '/checkout',
+    order : '/order/:id'
 }

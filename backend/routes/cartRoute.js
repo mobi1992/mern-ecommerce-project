@@ -7,6 +7,7 @@ const { decrementQty } = require('../controllers/cart_controller/decrementQty')
 const { removeFromCart } = require('../controllers/cart_controller/removeFromCart')
 const { getCartItems } = require('../controllers/cart_controller/getCartItems')
 const { changeQty } = require('../controllers/cart_controller/changeQty')
+const { emptyCart } = require('../controllers/cart_controller/emptyCart')
 
 router.post('/cart', auth, addToCart)
 router.post('/cart/increment', auth, incrementQty)
@@ -14,4 +15,5 @@ router.post('/cart/decrement', auth, decrementQty)
 router.post('/cart/remove', auth, removeFromCart)
 router.post('/cart/change/quantity', auth, changeQty)
 router.get('/cart', auth, getCartItems)
+router.get('/empty/cart', auth, emptyCart)
 module.exports = router

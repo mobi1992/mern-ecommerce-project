@@ -27,6 +27,9 @@ import { incrementQtyReducerLoggedin } from './@reducers/loggedinUserCart/increm
 import { decrementQtyReducerLoggedin } from './@reducers/loggedinUserCart/decrementQtyReducer'
 import { removeFromCartReducerLoggedin } from './@reducers/loggedinUserCart/removeFromCartReducer'
 import { changeQtyReducerLoggedin } from './@reducers/loggedinUserCart/changeQtyReducer'
+import { createNewOrderUnkReducer } from './@reducers/order/createNewOrderUnkReducer'
+import { getOrderUnkWithOrderIdReducer } from './@reducers/order/getUnknownUserOrderWithOrderIdReducer'
+import { getOrderUnkWithOrderNoReducer } from './@reducers/order/getOrderUnkWithOrderNoReducer'
 const reducer = combineReducers({
     products : productReducer,
     product : productDetailReducer,
@@ -54,6 +57,9 @@ const reducer = combineReducers({
     decrementQtyLoggedinUser : decrementQtyReducerLoggedin,
     removeFromCartLoggedinUser : removeFromCartReducerLoggedin,
     changeQtyLoggedinUser : changeQtyReducerLoggedin,
+    createNewOrderUnk : createNewOrderUnkReducer,
+    getOrderUnkWithOrderId : getOrderUnkWithOrderIdReducer,
+    getOrderUnkWithOrderNo : getOrderUnkWithOrderNoReducer
 })
 let initialState = {}
 const middleware = [thunk]

@@ -6,6 +6,7 @@ exports.createProductReviewUnknownUser = async (req, res, next) => {
     try {
         const {name, rating, comment, productId } = req.body
         const review = {
+            user : '',
             name,
             rating: Number(rating),    // rating must be a number
             comment

@@ -73,7 +73,7 @@ const Information = ({ setContactInfo, nextStep }) => {
                 <Row>
                     <Col style={{ fontSize: 'large', fontWeight: 'bold' }}>Contact Information</Col>
                     <Col>
-                        <Row className='justify-content-right'>Already have an account?Log in</Row>
+                        <Row as = {Link} to = {routePaths.login} className='justify-content-right' style = {{cursor : 'default', color : 'black', textDecoration : 'none'}}>Already have an account?Log in</Row>
                     </Col>
                 </Row>
             </div>
@@ -83,7 +83,7 @@ const Information = ({ setContactInfo, nextStep }) => {
                         <Row style={{ fontSize: 'large', fontWeight: 'bold' }}>
                             Contact Information
                         </Row>
-                        <Row className='justify-content-right'>Already have an account?Log in</Row>
+                        <Row as = {Link} to = {routePaths.login} className='justify-content-right' style = {{cursor : 'default', color : 'black', textDecoration : 'none'}} >Already have an account?Log in</Row>
                     </Col>
                 </Row>
             </div>

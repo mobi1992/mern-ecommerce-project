@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: [true, 'Please select your country.']
         },
-        pinCode: {
+        postalCode: {
             type: Number,
             required: [true, 'Please enter the pin code / postal code.']
         },
@@ -90,21 +90,23 @@ const orderSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        // required: true
     },
 
     paymentInfo: {
-        id: {
-            type: String,
-            required: true
-        },
-        status: {
-            type: String,
-            required: true
-        }
+        // id: {
+        //     type: String,
+        //     required: true
+        // },
+        // status: {
+        //     type: String,
+        //     required: true
+        // }
+        type : String,
+        required : true
     },
 
-    paidAt: {
+    placedAt: {
         type: Date,
         required: true
     },
@@ -127,6 +129,11 @@ const orderSchema = new mongoose.Schema({
         default: 'Processing'
     },
 
+    userAgent : {
+        type : String,
+        required : true
+    },
+    
     deliveredAt: {
         type: Date,
     }

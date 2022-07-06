@@ -23,3 +23,15 @@
         display: none;
     }
   }
+
+  @media only screen and (max-width : 768px) {
+    .order_summary_display_on_large_screens {
+      display : none
+    }
+  }
+
+  @media only screen and (min-width : 768px) {
+    .order_summary_display_on_small_screens {
+      display : none
+    }
+  }

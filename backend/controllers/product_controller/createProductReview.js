@@ -5,9 +5,10 @@ const ErrorHander = require('../../utils/errorHandler')
 exports.createProductReviewLoggedinUser = async (req, res, next) => {
     try {
         const { rating, comment, productId } = req.body
+        console.log(req.user)
         const review = {
             user: req.user._id,
-            name: req.user.name,
+            name: req.user.firstName,
             rating: Number(rating),    // rating must be a number
             comment
         }
@@ -15,7 +16,9 @@ exports.createProductReviewLoggedinUser = async (req, res, next) => {
         if (!product) {
             next(new ErrorHander('No product found', 404))
         }
-        const isReviewed = product.reviews.find(rev => rev.user.toString() === req.user._id.toString())
+        
+        console.log(product.reviews)
+        const isReviewed = product.reviews.find(rev => rev.user === req.user._id.toString())
         if (isReviewed) {
             product.reviews.forEach(rev => {
                 if (rev.user.toString() === req.user._id.toString()) {

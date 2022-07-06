@@ -12,6 +12,7 @@ const { getProductReviews } = require('../controllers/product_controller/getProd
 const { deleteProductReview } = require('../controllers/product_controller/deleteProductReview')
 const router = new express.Router()
 const multer = require('multer')
+const { updateProductStock } = require('../controllers/product_controller/updateProductStock')
 
 
 // const upload = multer({
@@ -47,5 +48,5 @@ router.put('/product/review/logged-in-user', auth, createProductReviewLoggedinUs
 router.post('/product/review/unknown-user', createProductReviewUnknownUser)
 router.get('/product/review', getProductReviews)
 router.delete('/product/review', auth, deleteProductReview )
-
+router.put('/update/product-stock/:id', updateProductStock)
 module.exports = router

@@ -29,6 +29,10 @@ import MainCartContainer from './unknownUserMainCart'
 import MainCartContainer2 from './mainCart'
 import CheckoutUnk from './checkoutUnkUser'
 import Checkout from './checkoutLoggedinUser'
+import { createNewOrderUnknownUser } from '../@actions/orderActions/createNewOrderUnknownUser'
+import UnknownUserNewOrder from './order/unknownUserNewOrder'
+import UnknownUserGetOrder from './order/unknownUserGetOrder'
+import { getUnknownUserOrderWithOrderId } from '../@actions/orderActions/getUnknownUserOrderWithOrderId'
 const MainApp = () => {
   // const navigate = useNavigate()
   // const [searchParams, setSearchParams] = useSearchParams()
@@ -40,6 +44,16 @@ const MainApp = () => {
   console.log('loggedin user cart error', getCartItemsLoggedinUserError)
   console.log('user detaials ', userDetails)
   const dispatch = useDispatch()
+
+  const createNewOrderForUnknownUser = async ({shippingInfo, paymentInfo, shippingPrice}) => {
+    await dispatch(createNewOrderUnknownUser({shippingInfo, paymentInfo, shippingPrice}))
+    // dispatch(getUnknownUserOrderWithOrderId(routePaths.order))
+  }
+
+  const {createNewOrderUnkSuccess, createNewOrderUnk, createNewOrderUnkError, createNewOrderUnkLoading} = useSelector(state => state.createNewOrderUnk)
+
+  // const {getOrderUnkWithOrderIdSuccess, getOrderUnkWithOrderId, getOrderUnkWithOrderIdError, getOrderUnkWithOrderIdLoading} = useSelector(state => state.getOrderUnkWithOrderId)
+
   useEffect(() => {
     dispatch(getUserDetails())
   }, [])
@@ -50,8 +64,10 @@ const MainApp = () => {
     }
     else {
       dispatch(unknownUserGetCart())
+      // dispatch(getUnknownUserOrderWithOrderId(routePaths.order))
     }
   }, [isAuthenticated])
+  
   
   return (
     <>
@@ -81,10 +97,9 @@ const MainApp = () => {
             <Route exact path={routePaths.reset_password} element={<ResetThePassword />}/>
             <Route exact path={routePaths.mainCart} element={isAuthenticated ? <MainCartContainer2 /> : <MainCartContainer />} />
             {/* <Route exact path={routePaths.mainCart} element={<MainCartContainer2 />}/> */}
-            <Route exact path={routePaths.checkout} element={getCartItemsUnknownUserSuccess ? <CheckoutUnk /> : <MainCartContainer />}/>
-            <Route exact path={routePaths.checkout} element={getCartItemsLoggedinUserSuccess ? <Checkout /> : <MainCartContainer2 />}/>
-            <Route exact path={routePaths.checkout} element={isAuthenticated ? <Checkout /> : <CheckoutUnk />}/>
-            
+            <Route exact path={routePaths.checkout} element={isAuthenticated ? <Checkout getCartItemsLoggedinUser = {getCartItemsLoggedinUser} getCartItemsLoggedinUserError = {getCartItemsLoggedinUserError} getCartItemsLoggedinUserSuccess = {getCartItemsLoggedinUserSuccess}/> : <CheckoutUnk createNewOrderForUnknownUser = {createNewOrderForUnknownUser}  getCartItemsUnknownUser = {getCartItemsUnknownUser} getCartItemsUnknownUserError = {getCartItemsUnknownUserError} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} createNewOrderUnkError = {createNewOrderUnkError} createNewOrderUnkLoading = {createNewOrderUnkLoading} createNewOrderUnk = {createNewOrderUnk}/>}/>
+            <Route exact path = {routePaths.order} element = {<UnknownUserNewOrder />} />
+
           </Routes>
           
         </Router>

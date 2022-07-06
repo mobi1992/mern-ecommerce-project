@@ -23,11 +23,16 @@ export const apis = {
     unknownUsrIncrementQty : async({product}) => axios.post('/cart/increment/unknown-user', {product}, {headers: { "Content-Type": "application/json" }}),
     unknownUsrDecrementQty : async({product}) => axios.post('/cart/decrement/unknown-user', {product}, {headers: { "Content-Type": "application/json" }}),
     unknownUsrRemoveFromCart : async({product}) => axios.post('/cart/remove/unknown-user', {product}, {headers: { "Content-Type": "application/json" }}),
+    unknowUsrEmptyCart : async () => axios.get('/empty/cart/unknown-user'),
     unknownUsrChangeQty : async({product, quantity}) => axios.post('/cart/change/quantity/unknown-user', {product, quantity}, {headers: { "Content-Type": "application/json" }}),
     loggedinUsrAddToCart : async({name, price, quantity, image, product, productStock}) => axios.post('/cart', {name, price, quantity, image, product, productStock},{ headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
     loggedinUsrGetCart : async() => axios.get('/cart', { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
     loggedinUsrIncrementQty : async({product}) => axios.post('/cart/increment', {product}, { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
     loggedinUsrDecrementQty : async({product}) => axios.post('/cart/decrement', {product}, { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
     loggedinUsrRemoveFromCart : async({product}) => axios.post('/cart/remove', {product}, { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
+    loggedinUsrEmptyCart : async () => axios.get('/empty/cart'),
     loggedinUsrChangeQty : async({product, quantity}) => axios.post('/cart/change/quantity', {product, quantity}, { headers: { Authorization: "Bearer " + await localStorage.getItem("AUTH_TOKEN")}}),
+    createNewOrderUnk : async({shippingInfo, paymentInfo, shippingPrice}) => axios.post('/order/unknown-user', {shippingInfo, paymentInfo, shippingPrice}, {headers: { "Content-Type": "application/json" }}),
+    getUnkUserOrderWithOrderId : async (id) => axios.get(`/unknown-user-order/${id}`),
+    getUnkUserOrderWithOrderNo : async ({orderNo, email, id}) => axios.post(`/unknown-user-order/${id}`, {orderNo, email}, {headers: { "Content-Type": "application/json" }})
 }

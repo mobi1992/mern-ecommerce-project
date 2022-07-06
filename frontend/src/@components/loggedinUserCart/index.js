@@ -45,6 +45,15 @@ const CartContainer = ({ onCloseCart, msg }) => {
         setShowUpdateCartButton(false)
     }
     
+    const updatedCart = () => {
+        dispatch(loggedinUserGetCart())
+        setShowUpdateCartButton(false)
+        getCartItemsLoggedinUser.cart.cartItems.map(item => {
+            if (item.quantity > item.productStock) {
+                return alert(`The quantity of ${item.name} is greater than this item's stock, so order cannot be placed! Please reduce the quantity first to place the order.`)
+            }
+        })
+    }
     // useEffect(() => {
     //     if (getCartItemsUnknownUser.cart.cartItems.length > 0) {
     //         setMsg('Item has been successfully added to your cart.')
@@ -143,7 +152,7 @@ const CartContainer = ({ onCloseCart, msg }) => {
                                 {showUpdateCartButton && <Button onClick = {updateCart} size='lg'className='updated-cart responsive-content-cart-button'>Update The Cart</Button>}
                                 <Button as = {Link} to = {routePaths.mainCart} size='lg' className='cart-btn responsive-content-cart-button'>View The Cart</Button>
                                 <Button as = {Link} to = {routePaths.allProducts} size='lg' className='cart-btn responsive-content-cart-button'>Continue Shopping</Button>
-                                <Button as = {Link} to = {routePaths.checkout} size='lg' className='cart-btn responsive-content-cart-button'>Checkout</Button>
+                                <Button as = {Link} to = {routePaths.checkout} onClick = {updatedCart} size='lg' className='cart-btn responsive-content-cart-button'>Checkout</Button>
                             </div>
                         </Col>
                     </Row>

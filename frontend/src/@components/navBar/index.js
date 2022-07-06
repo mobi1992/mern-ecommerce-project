@@ -27,6 +27,10 @@ const NavBar = ({userDetails, getCartItems}) => {
         navigate(routePaths.allProducts)
         window.location.reload(false)
     }
+    const linkToCart = () => {
+        navigate(routePaths.mainCart)
+        window.location.reload()
+    }
     useEffect(() => {
         dispatch(getCategories())
         // console.log(categories)
@@ -79,8 +83,8 @@ const NavBar = ({userDetails, getCartItems}) => {
                         <p>Search</p>
                         <SearchPopover />
                     </Nav.Item>
-                    <div style={{ paddingTop: '1vh', paddingBottom: '2vh', paddingLeft: '2vh' }}>
-                        <Badge badgeContent={getCartItems.cart.totalQuantity} color="primary">
+                    <div onClick = {linkToCart} style={{ paddingTop: '1vh', paddingBottom: '2vh', paddingLeft: '2vh' }}>
+                        <Badge  badgeContent={getCartItems.cart.totalQuantity} color="primary">
                             <ShoppingCartOutlined color="action" />
                         </Badge>
                     </div>
@@ -140,8 +144,8 @@ const NavBar = ({userDetails, getCartItems}) => {
                         <Search />
                         <SearchPopover />
                     </Nav.Item>
-                    <div style={{ paddingTop: '0.25vw', paddingRight: '2vw', paddingLeft: '1vw' }}>
-                        <Badge badgeContent={getCartItems.cart.totalQuantity} color="primary">
+                    <div onClick = {linkToCart} style={{ paddingTop: '0.25vw', paddingRight: '2vw', paddingLeft: '1vw' }}>
+                        <Badge  badgeContent={getCartItems.cart.totalQuantity} color="primary">
                             <ShoppingCartOutlined color="action" />
                         </Badge>
                     </div>

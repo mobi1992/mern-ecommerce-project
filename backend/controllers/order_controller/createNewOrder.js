@@ -4,6 +4,7 @@ const Cart = require('../../models/cart')
 exports.newOrder = async(req,res,next) => {
     try {
         const {shippingInfo, paymentInfo, shippingPrice} = req.body
+        const userAgent = req.headers['user-agent']
         const cart = await Cart.findOne({ user: req.user._id })
         // console.log(cart)
         if(!cart){
@@ -21,10 +22,14 @@ exports.newOrder = async(req,res,next) => {
             },
             paymentInfo,
             shippingPrice,
+            userAgent,
             totalPrice : cart.totalPrice + shippingPrice,
-            paidAt : Date.now(),
+            placedAt : Date.now(),
             user : req.user._id
         })
+        
+
+        
         await order.generateOrderNo()
         res.status(201).send({
             success : true,

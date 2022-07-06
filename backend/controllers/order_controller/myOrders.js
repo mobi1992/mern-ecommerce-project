@@ -4,7 +4,7 @@ const ErrorHandler = require('../../utils/errorHandler')
 
 exports.myOrders = async(req,res,next) => {
     try {
-        const orders = await Order.find({user : req.user._id}).populate('user', "name email")
+        const orders = await Order.find({user : req.user._id})
         if(!orders) {
             return next(new ErrorHandler('No order found with this id', 404))
         }
