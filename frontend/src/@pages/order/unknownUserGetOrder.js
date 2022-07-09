@@ -85,7 +85,7 @@ const UnknownUserGetOrder = () => {
       </Col>
     </Row>
   </Container> : 
-  getOrderUnkWithOrderNoSuccess && 
+  getOrderUnkWithOrderNoSuccess ?
   <>
   <div className='order_display_on_large_screens'>
     <Row >
@@ -390,7 +390,12 @@ const UnknownUserGetOrder = () => {
       </Container>
     </Col>
   </div>
-</>  
+</>  : <div>
+<Container className = 'mt-5'>
+          <div className = 'mb-3'>{getOrderUnkWithOrderNoError}</div>
+          <Button as = {Link} to = {'/'}  variant = 'dark'>Return to Home</Button>
+        </Container>
+</div>
     }
     </>
   )

@@ -135,3 +135,16 @@
 .product-info-container:focus {
     opacity: 1;
 }
+
+.sold_product_image {
+    position : relative
+  }
+
+  .sold_product_notify-badge{
+    position: absolute;
+    right:-5px;
+    top:-10px;
+    font-size: 18px;
+    font-family: 'Gentium Book Plus', serif;
+    z-index: 2;
+  }

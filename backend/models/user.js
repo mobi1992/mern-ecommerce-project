@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
         trim: true
         // select : false
     },
+    country : {
+        type : String,
+        trim : true
+    },
 
     address : {
         type : String,
@@ -59,6 +63,10 @@ const userSchema = new mongoose.Schema({
         trim : true
     },
 
+    phoneNo : {
+        type : String,
+        trim : true
+    },
     // profile_pic: {
     //     public_id: {
     //         type: String,

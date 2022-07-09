@@ -1,10 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProductStock } from '../../@actions/productActions/updateProductStock';
 
 const Shipping = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, contactInfo, nextStep, prevStep}) => {
-       
-       
+       const dispatch = useDispatch()
+       const {updateProductStk, error} = useSelector(state => state.updateProductStk)
+       const toNextStep = async () => {
+        for (let i = 0; i < getCartItemsUnknownUser.cart.cartItems.length; i++){
+            const id = getCartItemsUnknownUser.cart.cartItems[i].product
+            const quantity = getCartItemsUnknownUser.cart.cartItems[i].quantity
+           await dispatch(updateProductStock({id, quantity}))
+           console.log('quantity',quantity )
+        }
+        nextStep()
+       }
+       useEffect(() => {
+        if (error) {
+            return alert('Order cannot be placed, as one of the product is currently unavailable!')
+        }
+    }, [error])
         return (
            <>
            {getCartItemsUnknownUserSuccess && 
@@ -58,7 +74,7 @@ const Shipping = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, cont
                     <br></br>
                     <div style = {{display : 'flex', justifyContent:'space-between'}}>
                         <Button variant = 'light' onClick = {prevStep}>Back</Button>
-                        <Button variant = 'dark' onClick = {nextStep}>Next</Button>
+                        <Button variant = 'dark' onClick = {toNextStep}>Next</Button>
                     </div>
                 </Col>
             </Row>

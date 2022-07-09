@@ -33,6 +33,7 @@ import { createNewOrderUnknownUser } from '../@actions/orderActions/createNewOrd
 import UnknownUserNewOrder from './order/unknownUserNewOrder'
 import UnknownUserGetOrder from './order/unknownUserGetOrder'
 import { getUnknownUserOrderWithOrderId } from '../@actions/orderActions/getUnknownUserOrderWithOrderId'
+import LoggedinUserOrder from './order/loggedinUserGetOrder'
 const MainApp = () => {
   // const navigate = useNavigate()
   // const [searchParams, setSearchParams] = useSearchParams()
@@ -45,14 +46,14 @@ const MainApp = () => {
   console.log('user detaials ', userDetails)
   const dispatch = useDispatch()
 
-  const createNewOrderForUnknownUser = async ({shippingInfo, paymentInfo, shippingPrice}) => {
-    await dispatch(createNewOrderUnknownUser({shippingInfo, paymentInfo, shippingPrice}))
-    // dispatch(getUnknownUserOrderWithOrderId(routePaths.order))
-  }
+  // const createNewOrderForUnknownUser = async ({shippingInfo, paymentInfo, shippingPrice}) => {
+  //   await dispatch(createNewOrderUnknownUser({shippingInfo, paymentInfo, shippingPrice}))
+  //   // dispatch(getUnknownUserOrderWithOrderId(routePaths.order))
+  // }
 
-  const {createNewOrderUnkSuccess, createNewOrderUnk, createNewOrderUnkError, createNewOrderUnkLoading} = useSelector(state => state.createNewOrderUnk)
+  // const {createNewOrderUnkSuccess, createNewOrderUnk, createNewOrderUnkError, createNewOrderUnkLoading} = useSelector(state => state.createNewOrderUnk)
 
-  // const {getOrderUnkWithOrderIdSuccess, getOrderUnkWithOrderId, getOrderUnkWithOrderIdError, getOrderUnkWithOrderIdLoading} = useSelector(state => state.getOrderUnkWithOrderId)
+  const {getOrderUnkWithOrderIdSuccess, getOrderUnkWithOrderId, getOrderUnkWithOrderIdError, getOrderUnkWithOrderIdLoading} = useSelector(state => state.getOrderUnkWithOrderId)
 
   useEffect(() => {
     dispatch(getUserDetails())
@@ -97,8 +98,8 @@ const MainApp = () => {
             <Route exact path={routePaths.reset_password} element={<ResetThePassword />}/>
             <Route exact path={routePaths.mainCart} element={isAuthenticated ? <MainCartContainer2 /> : <MainCartContainer />} />
             {/* <Route exact path={routePaths.mainCart} element={<MainCartContainer2 />}/> */}
-            <Route exact path={routePaths.checkout} element={isAuthenticated ? <Checkout getCartItemsLoggedinUser = {getCartItemsLoggedinUser} getCartItemsLoggedinUserError = {getCartItemsLoggedinUserError} getCartItemsLoggedinUserSuccess = {getCartItemsLoggedinUserSuccess}/> : <CheckoutUnk createNewOrderForUnknownUser = {createNewOrderForUnknownUser}  getCartItemsUnknownUser = {getCartItemsUnknownUser} getCartItemsUnknownUserError = {getCartItemsUnknownUserError} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} createNewOrderUnkError = {createNewOrderUnkError} createNewOrderUnkLoading = {createNewOrderUnkLoading} createNewOrderUnk = {createNewOrderUnk}/>}/>
-            <Route exact path = {routePaths.order} element = {<UnknownUserNewOrder />} />
+            <Route exact path={routePaths.checkout} element={isAuthenticated ? <Checkout userDetails = {userDetails} getCartItemsLoggedinUser = {getCartItemsLoggedinUser} getCartItemsLoggedinUserError = {getCartItemsLoggedinUserError} getCartItemsLoggedinUserSuccess = {getCartItemsLoggedinUserSuccess}/> : <CheckoutUnk  getCartItemsUnknownUser = {getCartItemsUnknownUser} getCartItemsUnknownUserError = {getCartItemsUnknownUserError} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} />}/>
+            <Route exact path = {routePaths.order} element = {isAuthenticated ? <LoggedinUserOrder /> : <UnknownUserNewOrder />} />
 
           </Routes>
           

@@ -13,8 +13,10 @@ import { ShoppingCartOutlined } from '@material-ui/icons';
 import './index.css'
 import { routePaths } from '../../@services/constants';
 import aloevera_soap from '../../@assets/images/Aloevera_Soap.jpeg'
+import { useDispatch } from 'react-redux';
 
-const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, getCartItemsUnknownUserSuccess, createNewOrderForUnknownUser , createNewOrderUnkError , createNewOrderUnkLoading, createNewOrderUnk }) => {
+
+const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, getCartItemsUnknownUserSuccess }) => {
     const [norCartItems, setNoCartItems] = useState(undefined)
     const navigate = useNavigate()
   const values = {
@@ -35,6 +37,7 @@ const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, get
     }
   }
     const steps = ['Inforamtion', 'Shipping', 'Payment']
+    const dispatch = useDispatch()
     const [activeStep, setActiveStep] = useState(0)
     const [checkoutToken, setCheckoutToken] = useState(null)
     const [contactInfo, setContactInfo] = useState(values)
@@ -48,16 +51,14 @@ const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, get
     setOrderSummary(false)
     setMsg('Show Order Summary')
   }
-    const generateToken = async () => {
-        try {
-            
-            
-        }
-        catch (err) {
-
-        }
-    }
-
+    // const updateTheQuantityOfProducts = () => {
+    //     if (getCartItemsUnknownUserSuccess) {
+    //         let i = 0;
+    //     for (i = 0; i < getCartItemsUnknownUser.cart.cartItems.length; i++){
+    //         dispatch(updateProductStock(getCartItemsUnknownUser.cart.cartItems[i].product, getCartItemsUnknownUser.cart.cartItems[i].quantity))
+    //     }
+    //     }
+    // }
     
     const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -94,7 +95,7 @@ const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, get
             return <Shipping getCartItemsUnknownUser={getCartItemsUnknownUser} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} contactInfo = {contactInfo} nextStep={nextStep} prevStep={backStep}/>
         }
         else if (activeStep === 2){
-            return <Payment getCartItemsUnknownUser={getCartItemsUnknownUser} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} contactInfo = {contactInfo} nextStep={nextStep} prevStep={backStep} createNewOrderForUnknownUser = {createNewOrderForUnknownUser} createNewOrderUnkError = {createNewOrderUnkError} createNewOrderUnkLoading = {createNewOrderUnkLoading} createNewOrderUnk = {createNewOrderUnk}/>
+            return <Payment getCartItemsUnknownUser={getCartItemsUnknownUser} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} contactInfo = {contactInfo} nextStep={nextStep} prevStep={backStep} />
         }
     }
     return (
@@ -167,7 +168,7 @@ const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, get
 
                         </div>
                         {/* Check if the checkoutToken is generated, then render the FormData, the react first renders the JSX then it goes to the useEffect to see if rereder is necessary */}
-                        {activeStep === steps.length ? <Confirmation /> : <FormData />}
+                        <FormData />
                     </Row>
                 </Col>
             </Row>
@@ -255,7 +256,7 @@ const CheckoutUnk = ({getCartItemsUnknownUser, getCartItemsUnknownUserError, get
 
                                     </div>
                                     {/* Check if the checkoutToken is generated, then render the FormData, the react first renders the JSX then it goes to the useEffect to see if rereder is necessary */}
-                                    {activeStep === steps.length ? <Confirmation /> : <FormData />}
+                                    <FormData />
                                 </Row>
                             </Col>
                         </Row>

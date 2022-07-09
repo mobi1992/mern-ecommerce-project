@@ -1,6 +1,6 @@
 import { LOGGEDIN_USER_EMPTY_CART_REQUEST, LOGGEDIN_USER_EMPTY_CART_SUCCESS, LOGGEDIN_USER_EMPTY_CART_FAILURE} from "../../@constants/loggedinUserCartConstants";
 import { apis } from "../../@services/apis";
-export const loggedinUserRemoveFromCart = () => async(dispatch) => {
+export const loggedinUserEmptyCart = () => async(dispatch) => {
     try {
         dispatch({
             type : LOGGEDIN_USER_EMPTY_CART_REQUEST

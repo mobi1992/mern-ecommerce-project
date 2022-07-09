@@ -30,9 +30,17 @@ import { changeQtyReducerLoggedin } from './@reducers/loggedinUserCart/changeQty
 import { createNewOrderUnkReducer } from './@reducers/order/createNewOrderUnkReducer'
 import { getOrderUnkWithOrderIdReducer } from './@reducers/order/getUnknownUserOrderWithOrderIdReducer'
 import { getOrderUnkWithOrderNoReducer } from './@reducers/order/getOrderUnkWithOrderNoReducer'
+import { emptyCartReducerLoggedin } from './@reducers/loggedinUserCart/emptyCartReducer'
+import { emptyCartReducerUnk } from './@reducers/unknownUserCart/emptyCartReducer'
+import { updateProductStockReducer } from './@reducers/product/updateProductStockReducer'
+import { getOrdersLoggedinUserReducer } from './@reducers/order/getLoggedinUserOrdersReducer'
+import { updateAddressReducer } from './@reducers/user/updateAddressReducer'
+import { createNewOrderLoggedinUserReducer } from './@reducers/order/createNewOrderLoggedinUserReducer'
+import { getSingleOrderLoggedinUserReducer } from './@reducers/order/getLoggedinUserSingleOrderReducer'
 const reducer = combineReducers({
     products : productReducer,
     product : productDetailReducer,
+    updateProductStk : updateProductStockReducer,
     categories : categoryReducer,
     categoryProducts : categoryItemsReducer,
     user : loginReducer,
@@ -42,6 +50,7 @@ const reducer = combineReducers({
     userSignUp : signUpReducer,
     logoutUser : logoutReducer,
     updatedUser : updateProfileReducer,
+    updatedUserAddress : updateAddressReducer,
     updatedPassword : updatePasswordReducer,
     forgotPassword : forgetPasswordReducer,
     resetPassword : resetPasswordReducer,
@@ -50,16 +59,21 @@ const reducer = combineReducers({
     incrementQtyUnknownUser : incrementQtyReducerUnk,
     decrementQtyUnknownUser : decrementQtyReducerUnk,
     removeFromCartUnknownUser : removeFromCartReducerUnk,
+    emptyCartUnknownUser : emptyCartReducerUnk,
     changeQtyUnknownUser : changeQtyReducerUnk,
     addToCartLoggedinUser : addToCartReducerLoggedin,
     getCartItemsLoggedinUser : getCartItemsReducerLoggedin,
     incrementQtyLoggedinUser : incrementQtyReducerLoggedin,
     decrementQtyLoggedinUser : decrementQtyReducerLoggedin,
     removeFromCartLoggedinUser : removeFromCartReducerLoggedin,
+    emptyCartLoggedinUser : emptyCartReducerLoggedin,
     changeQtyLoggedinUser : changeQtyReducerLoggedin,
     createNewOrderUnk : createNewOrderUnkReducer,
+    createNewOrderloggedinUsr : createNewOrderLoggedinUserReducer,
     getOrderUnkWithOrderId : getOrderUnkWithOrderIdReducer,
-    getOrderUnkWithOrderNo : getOrderUnkWithOrderNoReducer
+    getOrderUnkWithOrderNo : getOrderUnkWithOrderNoReducer,
+    getOrdersLoggedinUser : getOrdersLoggedinUserReducer,
+    getSingleOrderLoggedinUser : getSingleOrderLoggedinUserReducer
 })
 let initialState = {}
 const middleware = [thunk]

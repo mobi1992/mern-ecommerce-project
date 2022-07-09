@@ -1,3 +1,4 @@
+
 import { Badge } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import { Container, Button, Card, Col, Row } from 'react-bootstrap'
@@ -11,8 +12,9 @@ import { useParams} from 'react-router-dom'
 import { ShoppingCartOutlined } from '@material-ui/icons'
 import './index.css'
 import UnknownUserGetOrder from './unknownUserGetOrder'
+import { getloggedinUserSingleOrder } from '../../@actions/orderActions/getLoggedinUserSingleOrder'
 
-const UnknownUserNewOrder = () => {
+const LoggedinUserOrder = () => {
 window.onpopstate = function (event) {
   if(event) {
     window.location.reload()
@@ -32,19 +34,13 @@ window.onpopstate = function (event) {
     setMsg('Show Order Summary')
   }
   useEffect(() => {
-    dispatch(getUnknownUserOrderWithOrderId(id))
+    dispatch(getloggedinUserSingleOrder(id))
   }, [])
-  const { getOrderUnkWithOrderIdSuccess, getOrderUnkWithOrderId, getOrderUnkWithOrderIdError, getOrderUnkWithOrderIdLoading } = useSelector(state => state.getOrderUnkWithOrderId)
+  
+  const {getSingleOrderLoggedinUser, getSingleOrderLoggedinUserLoading, getSingleOrderLoggedinUserSuccess, getSingleOrderLoggedinUserError} = useSelector(state => state.getSingleOrderLoggedinUser)
+  
 
-  if (getOrderUnkWithOrderIdError === 'Enter your email and orderNo')
-  return (
-    <UnknownUserGetOrder />
-  )
-
-
-
-
-  else if (getOrderUnkWithOrderIdSuccess)
+  if (getSingleOrderLoggedinUserSuccess)
   {
   return (
     <>
@@ -53,8 +49,8 @@ window.onpopstate = function (event) {
             <Row >
               <Col lg='6' md='6'>
                 <Container>
-                  <div>Order {getOrderUnkWithOrderId.order.orderNo}</div>
-                  <h1 style={{ fontWeight: 'bolder' }}>Thank you {getOrderUnkWithOrderId.order.shippingInfo.firstName}!</h1>
+                  <div>Order {getSingleOrderLoggedinUser.order.orderNo}</div>
+                  <h1 style={{ fontWeight: 'bolder' }}>Thank you {getSingleOrderLoggedinUser.order.shippingInfo.firstName}!</h1>
                   <Card>
                     <Card.Body>
                       <div style={{ fontWeight: 'bold' }}>Your order is confirmed</div>
@@ -83,20 +79,20 @@ window.onpopstate = function (event) {
                         <div style={{ flex: '1' }}>Payment Method</div>
                       </div>
                       <div style={{ display: 'flex', marginBottom: '10px' }}>
-                        <div style={{ flex: '1' }}>{getOrderUnkWithOrderId.order.shippingInfo.email}</div>
-                        <div style={{ flex: '1' }}>Cash On Delivery ({getOrderUnkWithOrderId.order.paymentInfo}) - Rs. {getOrderUnkWithOrderId.order.totalPrice}</div>
+                        <div style={{ flex: '1' }}>{getSingleOrderLoggedinUser.order.shippingInfo.email}</div>
+                        <div style={{ flex: '1' }}>Cash On Delivery ({getSingleOrderLoggedinUser.order.paymentInfo}) - Rs. {getSingleOrderLoggedinUser.order.totalPrice}</div>
                       </div>
                       <div style={{ display: 'flex', fontWeight: 'bold' }}>
                         <div style={{ flex: '1' }}>Shipping Address</div>
                         <div style={{ flex: '1' }}>Billing Address</div>
                       </div>
                       <div style={{ display: 'flex', marginBottom: '10px' }}>
-                        <div style={{ flex: '1' }}>{getOrderUnkWithOrderId.order.shippingInfo.address} {getOrderUnkWithOrderId.order.shippingInfo.city} {getOrderUnkWithOrderId.order.shippingInfo.postalCode}, {getOrderUnkWithOrderId.order.shippingInfo.province}, {getOrderUnkWithOrderId.order.shippingInfo.country}, {getOrderUnkWithOrderId.order.shippingInfo.phoneNo}</div>
-                        <div style={{ flex: '1' }}>{getOrderUnkWithOrderId.order.shippingInfo.address} {getOrderUnkWithOrderId.order.shippingInfo.city} {getOrderUnkWithOrderId.order.shippingInfo.postalCode}, {getOrderUnkWithOrderId.order.shippingInfo.province}, {getOrderUnkWithOrderId.order.shippingInfo.country}, {getOrderUnkWithOrderId.order.shippingInfo.phoneNo}</div>
+                        <div style={{ flex: '1' }}>{getSingleOrderLoggedinUser.order.shippingInfo.address} {getSingleOrderLoggedinUser.order.shippingInfo.city} {getSingleOrderLoggedinUser.order.shippingInfo.postalCode}, {getSingleOrderLoggedinUser.order.shippingInfo.province}, {getSingleOrderLoggedinUser.order.shippingInfo.country}, {getSingleOrderLoggedinUser.order.shippingInfo.phoneNo}</div>
+                        <div style={{ flex: '1' }}>{getSingleOrderLoggedinUser.order.shippingInfo.address} {getSingleOrderLoggedinUser.order.shippingInfo.city} {getSingleOrderLoggedinUser.order.shippingInfo.postalCode}, {getSingleOrderLoggedinUser.order.shippingInfo.province}, {getSingleOrderLoggedinUser.order.shippingInfo.country}, {getSingleOrderLoggedinUser.order.shippingInfo.phoneNo}</div>
                       </div>
 
                       <div style={{ fontWeight: 'bold' }}>Shipping Method</div>
-                      {getOrderUnkWithOrderId.totalCost < 3000 ? <div>Rs {getOrderUnkWithOrderId.order.shippingPrice}</div> : <div>Free Shipping</div>}
+                      {getSingleOrderLoggedinUser.totalCost < 3000 ? <div>Rs {getSingleOrderLoggedinUser.order.shippingPrice}</div> : <div>Free Shipping</div>}
                     </Card.Body>
                   </Card>
                   <div className='mt-5 mb-5'>
@@ -108,9 +104,9 @@ window.onpopstate = function (event) {
               <Col lg='6' md='6' style={{ background: '#ffe6f0', paddingTop: '30px' }}>
                 <Container>
                   <hr></hr>
-                  {getOrderUnkWithOrderId.order.cart.totalQty === 1 ? <p style={{ font: '600 4vh italic' }}>{getOrderUnkWithOrderId.order.cart.totalQty} ITEM IN THE CART</p> : <p style={{ font: '600 4vh italic' }}>{getOrderUnkWithOrderId.order.cart.totalQty} ITEMS IN THE CART</p>}
+                  {getSingleOrderLoggedinUser.order.cart.totalQty === 1 ? <p style={{ font: '600 4vh italic' }}>{getSingleOrderLoggedinUser.order.cart.totalQty} ITEM IN THE CART</p> : <p style={{ font: '600 4vh italic' }}>{getSingleOrderLoggedinUser.order.cart.totalQty} ITEMS IN THE CART</p>}
                   <hr></hr>
-                  {getOrderUnkWithOrderId.order.cart.orderItems.map(item => (
+                  {getSingleOrderLoggedinUser.order.cart.orderItems.map(item => (
                     <Row className='align-items-center mb-3'>
                       <Col>
                         <div className='order_image'>
@@ -131,17 +127,17 @@ window.onpopstate = function (event) {
                   <hr></hr>
                   <div style={{ display: 'flex', marginBottom: '5px' }}>
                     <div style={{ flex: '1' }}>Subtotal</div>
-                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.cart.totalCost}</div>
+                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.cart.totalCost}</div>
                   </div>
                   <div style={{ display: 'flex' }}>
                     <div style={{ flex: '1' }}>Shipping</div>
-                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.shippingPrice}</div>
+                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.shippingPrice}</div>
                   </div>
                   <hr></hr>
 
                   <div style={{ display: 'flex', marginBottom: '5px' }}>
                     <div style={{ flex: '1' }}>Total</div>
-                    <h1 style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.totalPrice}</h1>
+                    <h1 style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.totalPrice}</h1>
                   </div>
                 </Container>
               </Col>
@@ -152,8 +148,8 @@ window.onpopstate = function (event) {
             <Row >
               <Col lg='6' md='6'>
                 <Container>
-                  <div>Order {getOrderUnkWithOrderId.order.orderNo}</div>
-                  <h1 style={{ fontWeight: 'bolder' }}>Thank you {getOrderUnkWithOrderId.order.shippingInfo.firstName}!</h1>
+                  <div>Order {getSingleOrderLoggedinUser.order.orderNo}</div>
+                  <h1 style={{ fontWeight: 'bolder' }}>Thank you {getSingleOrderLoggedinUser.order.shippingInfo.firstName}!</h1>
                   <Card>
                     <Card.Body>
                       <div style={{ fontWeight: 'bold' }}>Your order is confirmed</div>
@@ -178,17 +174,17 @@ window.onpopstate = function (event) {
                       <div style={{ fontWeight: 'bold' }}>Customer Information</div>
                       <div>Kindly note that your order will be delivered within 3-5 working days, but the delivery time may be longer in case of public holidays, protests or strikes.</div>
                       <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Contact Information</div>
-                      <div>{getOrderUnkWithOrderId.order.shippingInfo.email}</div>
+                      <div>{getSingleOrderLoggedinUser.order.shippingInfo.email}</div>
                       <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Payment Method</div>
-                      <div>Cash On Delivery ({getOrderUnkWithOrderId.order.paymentInfo}) - Rs. {getOrderUnkWithOrderId.order.totalPrice}</div>
+                      <div>Cash On Delivery ({getSingleOrderLoggedinUser.order.paymentInfo}) - Rs. {getSingleOrderLoggedinUser.order.totalPrice}</div>
 
                       <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Shipping Address</div>
-                      <div>{getOrderUnkWithOrderId.order.shippingInfo.address} {getOrderUnkWithOrderId.order.shippingInfo.city} {getOrderUnkWithOrderId.order.shippingInfo.postalCode}, {getOrderUnkWithOrderId.order.shippingInfo.province}, {getOrderUnkWithOrderId.order.shippingInfo.country}, {getOrderUnkWithOrderId.order.shippingInfo.phoneNo}</div>
+                      <div>{getSingleOrderLoggedinUser.order.shippingInfo.address} {getSingleOrderLoggedinUser.order.shippingInfo.city} {getSingleOrderLoggedinUser.order.shippingInfo.postalCode}, {getSingleOrderLoggedinUser.order.shippingInfo.province}, {getSingleOrderLoggedinUser.order.shippingInfo.country}, {getSingleOrderLoggedinUser.order.shippingInfo.phoneNo}</div>
                       <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Billing Address</div>
-                      <div>{getOrderUnkWithOrderId.order.shippingInfo.address} {getOrderUnkWithOrderId.order.shippingInfo.city} {getOrderUnkWithOrderId.order.shippingInfo.postalCode}, {getOrderUnkWithOrderId.order.shippingInfo.province}, {getOrderUnkWithOrderId.order.shippingInfo.country}, {getOrderUnkWithOrderId.order.shippingInfo.phoneNo}</div>
+                      <div>{getSingleOrderLoggedinUser.order.shippingInfo.address} {getSingleOrderLoggedinUser.order.shippingInfo.city} {getSingleOrderLoggedinUser.order.shippingInfo.postalCode}, {getSingleOrderLoggedinUser.order.shippingInfo.province}, {getSingleOrderLoggedinUser.order.shippingInfo.country}, {getSingleOrderLoggedinUser.order.shippingInfo.phoneNo}</div>
 
                       <div style={{ fontWeight: 'bold' }}>Shipping Method</div>
-                      {getOrderUnkWithOrderId.totalCost < 3000 ? <div>Rs {getOrderUnkWithOrderId.order.shippingPrice}</div> : <div>Free Shipping</div>}
+                      {getSingleOrderLoggedinUser.totalCost < 3000 ? <div>Rs {getSingleOrderLoggedinUser.order.shippingPrice}</div> : <div>Free Shipping</div>}
                     </Card.Body>
                   </Card>
                   <div className='mt-5 mb-5'>
@@ -200,9 +196,9 @@ window.onpopstate = function (event) {
               <Col lg='6' md='6' style={{ background: '#ffe6f0', paddingTop: '30px' }}>
                 <Container>
                   <hr></hr>
-                  {getOrderUnkWithOrderId.order.cart.totalQty === 1 ? <p style={{ font: '600 4vh italic' }}>{getOrderUnkWithOrderId.order.cart.totalQty} ITEM IN THE CART</p> : <p style={{ font: '600 4vh italic' }}>{getOrderUnkWithOrderId.order.cart.totalQty} ITEMS IN THE CART</p>}
+                  {getSingleOrderLoggedinUser.order.cart.totalQty === 1 ? <p style={{ font: '600 4vh italic' }}>{getSingleOrderLoggedinUser.order.cart.totalQty} ITEM IN THE CART</p> : <p style={{ font: '600 4vh italic' }}>{getSingleOrderLoggedinUser.order.cart.totalQty} ITEMS IN THE CART</p>}
                   <hr></hr>
-                  {getOrderUnkWithOrderId.order.cart.orderItems.map(item => (
+                  {getSingleOrderLoggedinUser.order.cart.orderItems.map(item => (
                     <Row className='align-items-center mb-3'>
                       <Col>
                         <div className='order_image'>
@@ -223,17 +219,17 @@ window.onpopstate = function (event) {
                   <hr></hr>
                   <div style={{ display: 'flex', marginBottom: '5px' }}>
                     <div style={{ flex: '1' }}>Subtotal</div>
-                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.cart.totalCost}</div>
+                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.cart.totalCost}</div>
                   </div>
                   <div style={{ display: 'flex' }}>
                     <div style={{ flex: '1' }}>Shipping</div>
-                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.shippingPrice}</div>
+                    <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.shippingPrice}</div>
                   </div>
                   <hr></hr>
 
                   <div style={{ display: 'flex', marginBottom: '5px' }}>
                     <div style={{ flex: '1' }}>Total</div>
-                    <h1 style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.totalPrice}</h1>
+                    <h1 style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.totalPrice}</h1>
                   </div>
                 </Container>
               </Col>
@@ -249,14 +245,14 @@ window.onpopstate = function (event) {
                     <ShoppingCartOutlined />
                   </div>
                   <div onClick={showTheOrderSummary} style={{ flex: '6', cursor: 'pointer', color: 'blue' }}>{msg}</div>
-                  <div style={{ display: 'flex', flex: '2', justifyContent: 'right', marginRight: '10px', fontWeight: 'bold' }}>Rs {getOrderUnkWithOrderId.order.totalPrice}</div>
+                  <div style={{ display: 'flex', flex: '2', justifyContent: 'right', marginRight: '10px', fontWeight: 'bold' }}>Rs {getSingleOrderLoggedinUser.order.totalPrice}</div>
                 </> :
                 <>
                   <div onClick={hideTheOrderSummary} style={{ display: 'flex', flex: '1', justifyContent: 'right', marginRight: '3px', cursor: 'pointer', color: 'blue' }}>
                     <ShoppingCartOutlined />
                   </div>
                   <div onClick={hideTheOrderSummary} style={{ flex: '6', cursor: 'pointer', color: 'blue' }}>{msg}</div>
-                  <div style={{ display: 'flex', flex: '2', justifyContent: 'right', marginRight: '10px', fontWeight: 'bold' }}>Rs {getOrderUnkWithOrderId.order.totalPrice}</div>
+                  <div style={{ display: 'flex', flex: '2', justifyContent: 'right', marginRight: '10px', fontWeight: 'bold' }}>Rs {getSingleOrderLoggedinUser.order.totalPrice}</div>
                 </>}
             </div>
             {
@@ -265,9 +261,9 @@ window.onpopstate = function (event) {
                 <Col lg='6' md='6' style={{ background: '#ffe6f0', paddingTop: '30px' }}>
                   <Container>
                     <hr></hr>
-                    {getOrderUnkWithOrderId.order.cart.totalQty === 1 ? <p style={{ font: '600 4vh italic' }}>{getOrderUnkWithOrderId.order.cart.totalQty} ITEM IN THE CART</p> : <p style={{ font: '600 4vh italic' }}>{getOrderUnkWithOrderId.order.cart.totalQty} ITEMS IN THE CART</p>}
+                    {getSingleOrderLoggedinUser.order.cart.totalQty === 1 ? <p style={{ font: '600 4vh italic' }}>{getSingleOrderLoggedinUser.order.cart.totalQty} ITEM IN THE CART</p> : <p style={{ font: '600 4vh italic' }}>{getSingleOrderLoggedinUser.order.cart.totalQty} ITEMS IN THE CART</p>}
                     <hr></hr>
-                    {getOrderUnkWithOrderId.order.cart.orderItems.map(item => (
+                    {getSingleOrderLoggedinUser.order.cart.orderItems.map(item => (
                       <Row className='align-items-center mb-3'>
                         <Col>
                           <div className='order_image'>
@@ -288,17 +284,17 @@ window.onpopstate = function (event) {
                     <hr></hr>
                     <div style={{ display: 'flex', marginBottom: '5px' }}>
                       <div style={{ flex: '1' }}>Subtotal</div>
-                      <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.cart.totalCost}</div>
+                      <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.cart.totalCost}</div>
                     </div>
                     <div style={{ display: 'flex' }}>
                       <div style={{ flex: '1' }}>Shipping</div>
-                      <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.shippingPrice}</div>
+                      <div style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.shippingPrice}</div>
                     </div>
                     <hr></hr>
 
                     <div style={{ display: 'flex', marginBottom: '5px' }}>
                       <div style={{ flex: '1' }}>Total</div>
-                      <h1 style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getOrderUnkWithOrderId.order.totalPrice}</h1>
+                      <h1 style={{ display: 'flex', flex: '1', justifyContent: 'right', fontWeight: 'bolder' }}>Rs {getSingleOrderLoggedinUser.order.totalPrice}</h1>
                     </div>
                   </Container>
                 </Col>
@@ -307,8 +303,8 @@ window.onpopstate = function (event) {
 
             <Col lg='6' md='6' className='mt-5'>
               <Container>
-                <div>Order {getOrderUnkWithOrderId.order.orderNo}</div>
-                <h1 style={{ fontWeight: 'bolder' }}>Thank you {getOrderUnkWithOrderId.order.shippingInfo.firstName}!</h1>
+                <div>Order {getSingleOrderLoggedinUser.order.orderNo}</div>
+                <h1 style={{ fontWeight: 'bolder' }}>Thank you {getSingleOrderLoggedinUser.order.shippingInfo.firstName}!</h1>
                 <Card>
                   <Card.Body>
                     <div style={{ fontWeight: 'bold' }}>Your order is confirmed</div>
@@ -333,17 +329,17 @@ window.onpopstate = function (event) {
                     <div style={{ fontWeight: 'bold' }}>Customer Information</div>
                     <div>Kindly note that your order will be delivered within 3-5 working days, but the delivery time may be longer in case of public holidays, protests or strikes.</div>
                     <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Contact Information</div>
-                    <div>{getOrderUnkWithOrderId.order.shippingInfo.email}</div>
+                    <div>{getSingleOrderLoggedinUser.order.shippingInfo.email}</div>
                     <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Payment Method</div>
-                    <div>Cash On Delivery ({getOrderUnkWithOrderId.order.paymentInfo}) - Rs. {getOrderUnkWithOrderId.order.totalPrice}</div>
+                    <div>Cash On Delivery ({getSingleOrderLoggedinUser.order.paymentInfo}) - Rs. {getSingleOrderLoggedinUser.order.totalPrice}</div>
 
                     <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Shipping Address</div>
-                    <div>{getOrderUnkWithOrderId.order.shippingInfo.address} {getOrderUnkWithOrderId.order.shippingInfo.city} {getOrderUnkWithOrderId.order.shippingInfo.postalCode}, {getOrderUnkWithOrderId.order.shippingInfo.province}, {getOrderUnkWithOrderId.order.shippingInfo.country}, {getOrderUnkWithOrderId.order.shippingInfo.phoneNo}</div>
+                    <div>{getSingleOrderLoggedinUser.order.shippingInfo.address} {getSingleOrderLoggedinUser.order.shippingInfo.city} {getSingleOrderLoggedinUser.order.shippingInfo.postalCode}, {getSingleOrderLoggedinUser.order.shippingInfo.province}, {getSingleOrderLoggedinUser.order.shippingInfo.country}, {getSingleOrderLoggedinUser.order.shippingInfo.phoneNo}</div>
                     <div style={{ fontWeight: 'bold', marginTop: '10px' }}>Billing Address</div>
-                    <div>{getOrderUnkWithOrderId.order.shippingInfo.address} {getOrderUnkWithOrderId.order.shippingInfo.city} {getOrderUnkWithOrderId.order.shippingInfo.postalCode}, {getOrderUnkWithOrderId.order.shippingInfo.province}, {getOrderUnkWithOrderId.order.shippingInfo.country}, {getOrderUnkWithOrderId.order.shippingInfo.phoneNo}</div>
+                    <div>{getSingleOrderLoggedinUser.order.shippingInfo.address} {getSingleOrderLoggedinUser.order.shippingInfo.city} {getSingleOrderLoggedinUser.order.shippingInfo.postalCode}, {getSingleOrderLoggedinUser.order.shippingInfo.province}, {getSingleOrderLoggedinUser.order.shippingInfo.country}, {getSingleOrderLoggedinUser.order.shippingInfo.phoneNo}</div>
 
                     <div style={{ fontWeight: 'bold' }}>Shipping Method</div>
-                    {getOrderUnkWithOrderId.totalCost < 3000 ? <div>Rs {getOrderUnkWithOrderId.order.shippingPrice}</div> : <div>Free Shipping</div>}
+                    {getSingleOrderLoggedinUser.totalCost < 3000 ? <div>Rs {getSingleOrderLoggedinUser.order.shippingPrice}</div> : <div>Free Shipping</div>}
                   </Card.Body>
                 </Card>
                 <div className='mt-5 mb-5'>
@@ -360,7 +356,7 @@ window.onpopstate = function (event) {
 
 
 
-    else if (getOrderUnkWithOrderIdError){
+    else if (getSingleOrderLoggedinUserError){
       return (
         <Container className = 'mt-5'>
           <div className = 'mb-3'>The page you requested does not exist</div>
@@ -376,4 +372,4 @@ window.onpopstate = function (event) {
     }
 }
 
-export default UnknownUserNewOrder
+export default LoggedinUserOrder

@@ -2,57 +2,55 @@ import React, {useEffect, useState} from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import {useDispatch, useSelector} from 'react-redux'
-import { createNewOrderUnknownUser } from '../../@actions/orderActions/createNewOrderUnknownUser';
+import { createNewOrderLoggedinUser } from '../../@actions/orderActions/createNewOrderLoggedinUser';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { unknownUserEmptyCart } from '../../@actions/unknownUserCartActions/emptyCart';
+import {loggedinUserEmptyCart} from '../../@actions/loggedinUserCartActions/emptyCart'
 
-
-const Payment = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, contactInfo, nextStep, prevStep}) => {
+const Payment = ({getCartItemsLoggedinUser, getCartItemsLoggedinUserSuccess, contactInfo, nextStep, prevStep}) => {
     // const {id} = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
        const confirmOrder = async () => {
            const shippingInfo = contactInfo
            let shippingPrice = 0
-           if (getCartItemsUnknownUser.cart.totalPrice < 3000)
+           if (getCartItemsLoggedinUser.cart.totalPrice < 3000)
            {
                shippingPrice = 150
            }
            const paymentInfo = "COD"   // for cash on delivery
-        //   await createNewOrderForUnknownUser({shippingInfo, paymentInfo, shippingPrice})
+        //   await createNewOrderForLoggedinUser({shippingInfo, paymentInfo, shippingPrice})
         
         
-        await dispatch(createNewOrderUnknownUser({shippingInfo, paymentInfo, shippingPrice}))
+        await dispatch(createNewOrderLoggedinUser({shippingInfo, paymentInfo, shippingPrice}))
     
-        dispatch(unknownUserEmptyCart())
-         
+         dispatch(loggedinUserEmptyCart())
         //   console.log('createNewOrderUnk', createNewOrderUnk)
         //   navigate(`/order/${createNewOrderUnk._id}`)
         
 
        }
 
-       const {createNewOrderUnkSuccess, createNewOrderUnk, createNewOrderUnkError, createNewOrderUnkLoading} = useSelector(state => state.createNewOrderUnk)
-
        
+
+       const {createNewOrderloggedinUsr, createNewOrderloggedinUsrSuccess, createNewOrderloggedinUsrLoading, createNewOrderloggedinUsrError} = useSelector(state => state.createNewOrderloggedinUsr)
        useEffect(() => {
-           if( createNewOrderUnkLoading === false) {
-               console.log('createNewOrderUnk', createNewOrderUnk)
-               navigate(`/order/${createNewOrderUnk.order._id}`)
+           if( createNewOrderloggedinUsrLoading === false) {
+               console.log('createNewOrderUnk', createNewOrderloggedinUsr)
+               navigate(`/order/${createNewOrderloggedinUsr.order._id}`)
                window.location.reload(false)
            }
-       }, [createNewOrderUnkLoading])
+       }, [createNewOrderloggedinUsrLoading])
 
        useEffect(() => {
-           if (createNewOrderUnkError) {
+           if (createNewOrderloggedinUsrError) {
                return alert('Order cannot be placed, try refreshing the page')
            }
-       }, [createNewOrderUnkError])
+       }, [createNewOrderloggedinUsrError])
 
        
         return (
            <>
-           {getCartItemsUnknownUserSuccess && !createNewOrderUnkLoading &&
+           {getCartItemsLoggedinUserSuccess && !createNewOrderloggedinUsrLoading &&
             <Container>
             <Row>
                 <Col>
@@ -96,7 +94,7 @@ const Payment = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, conta
                                 <RadioButtonCheckedIcon />
                                 </div>
                                 <div style = {{fontWeight : 'bold', flex : '4'}}>Total Price Including Shipping</div>
-                               {getCartItemsUnknownUser.cart.totalPrice < 3000 ? <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsUnknownUser.cart.totalPrice + 150} </div> : <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsUnknownUser.cart.totalPrice} </div>}
+                               {getCartItemsLoggedinUser.cart.totalPrice < 3000 ? <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsLoggedinUser.cart.totalPrice + 150} </div> : <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsLoggedinUser.cart.totalPrice} </div>}
                             </div>
                         </Card.Body>
                     </Card>

@@ -1,6 +1,6 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons'
 import React from 'react'
-import { Col, Card, Image } from 'react-bootstrap'
+import { Col, Card, Image, Badge } from 'react-bootstrap'
 import './index.css'
 import { useNavigate, Link } from "react-router-dom";
 import ReactStars from 'react-rating-stars-component'
@@ -22,67 +22,132 @@ const Item = ({ product }) => {
     // const navigate = useNavigate()
     // console.log(product)
     return (
+        <>
+        {product.stock === 0 ?
         <Col style={{ marginTop: '1vh' }} lg='3' md='4' sm='6' xs='6'>
-            <Link style = {{textDecoration : 'none', color : 'black'}} to = {`/Products/${product._id}`}>
-                <Card  className='border-0 mt-2 card-product'>
-                    <div className='card-image-con'>
-                        <div className='product-image-wrapper'>
-                            <Image src={aloervera_soap} className='card-img img-responsive square-img' />
-                        </div>
-                        <div className='display-on-small-screens'>
-                            <div className='product-info-container'>
-                                {/* <Link to = {`/${product.id}`}> */}
-                                <div className='icon'>
-                                    <ShoppingCartOutlined fontSize='small' />
-                                </div>
-                                {/* </Link> */}
-                                {/* <div className='icon'>
-                                    <FavoriteBorderOutlined fontSize='small' />
-                                </div>
-                                <div className='icon'>
-                                    <SearchOutlined fontSize='small' />
-                                </div> */}
+        <Link style = {{textDecoration : 'none', color : 'black'}} to = {`/Products/${product._id}`}>
+            <Card  className='border-0 mt-2 card-product'>
+                <div className='card-image-con'>
+                    <div className='product-image-wrapper sold_product_image'>
+                        <Badge pill bg='secondary' className='sold_product_notify-badge'>Sold out</Badge>
+                        <Image src={aloervera_soap} className='card-img img-responsive square-img' />
+                    </div>
+                    <div className='display-on-small-screens'>
+                        <div className='product-info-container'>
+                            {/* <Link to = {`/${product.id}`}> */}
+                            <div className='icon'>
+                                <ShoppingCartOutlined fontSize='small' />
                             </div>
-                        </div>
-                        <div className='display-on-medium-screens'>
-                            <div className='product-info-container'>
-                                {/* <Link to = {`/${product.id}`}> */}
-                                <div className='icon'>
-                                    <ShoppingCartOutlined />
-                                </div>
-                                {/* </Link> */}
-                                {/* <div className='icon'>
-                                    <FavoriteBorderOutlined />
-                                </div> */}
-                                {/* <div className='icon'>
-                                    <SearchOutlined />
-                                </div> */}
+                            {/* </Link> */}
+                            {/* <div className='icon'>
+                                <FavoriteBorderOutlined fontSize='small' />
                             </div>
-                        </div>
-                        <div className='display-on-large-screens'>
-                            <div className='product-info-container'>
-                                {/* <Link to = {`/${product.id}`}> */}
-                                <div className='icon'>
-                                    <ShoppingCartOutlined fontSize='large' />
-                                </div>
-                                {/* </Link> */}
-                                {/* <div className='icon'>
-                                    <FavoriteBorderOutlined fontSize='large' />
-                                </div>
-                                <div className='icon'>
-                                    <SearchOutlined fontSize='large' />
-                                </div> */}
-                            </div>
+                            <div className='icon'>
+                                <SearchOutlined fontSize='small' />
+                            </div> */}
                         </div>
                     </div>
-                    <h6 className='text-center'>{product.name}</h6>
-                    <div>
-                        <div style = {{display : 'flex', justifyContent : 'center'}}><ReactStars  {...options} /></div><span style = {{display : 'flex', justifyContent : 'center'}}>({product.numOfReviews} Reviews)</span>
+                    <div className='display-on-medium-screens'>
+                        <div className='product-info-container'>
+                            {/* <Link to = {`/${product.id}`}> */}
+                            <div className='icon'>
+                                <ShoppingCartOutlined />
+                            </div>
+                            {/* </Link> */}
+                            {/* <div className='icon'>
+                                <FavoriteBorderOutlined />
+                            </div> */}
+                            {/* <div className='icon'>
+                                <SearchOutlined />
+                            </div> */}
+                        </div>
                     </div>
-                    <h6 className='text-center text-muted'>Rs {product.price}</h6>
-                </Card>
-                </Link>
-        </Col>
+                    <div className='display-on-large-screens'>
+                        <div className='product-info-container'>
+                            {/* <Link to = {`/${product.id}`}> */}
+                            <div className='icon'>
+                                <ShoppingCartOutlined fontSize='large' />
+                            </div>
+                            {/* </Link> */}
+                            {/* <div className='icon'>
+                                <FavoriteBorderOutlined fontSize='large' />
+                            </div>
+                            <div className='icon'>
+                                <SearchOutlined fontSize='large' />
+                            </div> */}
+                        </div>
+                    </div>
+                </div>
+                <h6 className='text-center'>{product.name}</h6>
+                <div>
+                    <div style = {{display : 'flex', justifyContent : 'center'}}><ReactStars  {...options} /></div><span style = {{display : 'flex', justifyContent : 'center'}}>({product.numOfReviews} Reviews)</span>
+                </div>
+                <h6 className='text-center text-muted'>Rs {product.price}</h6>
+            </Card>
+            </Link>
+    </Col> :
+    <Col style={{ marginTop: '1vh' }} lg='3' md='4' sm='6' xs='6'>
+    <Link style = {{textDecoration : 'none', color : 'black'}} to = {`/Products/${product._id}`}>
+        <Card  className='border-0 mt-2 card-product'>
+            <div className='card-image-con'>
+                <div className='product-image-wrapper'>
+                    <Image src={aloervera_soap} className='card-img img-responsive square-img' />
+                </div>
+                <div className='display-on-small-screens'>
+                    <div className='product-info-container'>
+                        {/* <Link to = {`/${product.id}`}> */}
+                        <div className='icon'>
+                            <ShoppingCartOutlined fontSize='small' />
+                        </div>
+                        {/* </Link> */}
+                        {/* <div className='icon'>
+                            <FavoriteBorderOutlined fontSize='small' />
+                        </div>
+                        <div className='icon'>
+                            <SearchOutlined fontSize='small' />
+                        </div> */}
+                    </div>
+                </div>
+                <div className='display-on-medium-screens'>
+                    <div className='product-info-container'>
+                        {/* <Link to = {`/${product.id}`}> */}
+                        <div className='icon'>
+                            <ShoppingCartOutlined />
+                        </div>
+                        {/* </Link> */}
+                        {/* <div className='icon'>
+                            <FavoriteBorderOutlined />
+                        </div> */}
+                        {/* <div className='icon'>
+                            <SearchOutlined />
+                        </div> */}
+                    </div>
+                </div>
+                <div className='display-on-large-screens'>
+                    <div className='product-info-container'>
+                        {/* <Link to = {`/${product.id}`}> */}
+                        <div className='icon'>
+                            <ShoppingCartOutlined fontSize='large' />
+                        </div>
+                        {/* </Link> */}
+                        {/* <div className='icon'>
+                            <FavoriteBorderOutlined fontSize='large' />
+                        </div>
+                        <div className='icon'>
+                            <SearchOutlined fontSize='large' />
+                        </div> */}
+                    </div>
+                </div>
+            </div>
+            <h6 className='text-center'>{product.name}</h6>
+            <div>
+                <div style = {{display : 'flex', justifyContent : 'center'}}><ReactStars  {...options} /></div><span style = {{display : 'flex', justifyContent : 'center'}}>({product.numOfReviews} Reviews)</span>
+            </div>
+            <h6 className='text-center text-muted'>Rs {product.price}</h6>
+        </Card>
+        </Link>
+</Col>}
+        </>
     )
 }
 

@@ -18,3 +18,16 @@
 .head {
     font : 400 bolder 3.5vh "Gill Sans"
 }
+
+.sold_product_detail_image {
+    position : relative
+  }
+
+  .sold_product_detail_notify-badge{
+    position: absolute;
+    right:-5px;
+    top:-10px;
+    font-size: 20px;
+    font-family: 'Gentium Book Plus', serif;
+    z-index: 2;
+  }

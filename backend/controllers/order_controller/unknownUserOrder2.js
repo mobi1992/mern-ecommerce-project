@@ -6,11 +6,11 @@ exports.unknownUserSingleOrder2 = async(req,res,next) => {
     const userAgent = req.headers['user-agent']
     const {orderNo, email} = req.body
     try {
-        const order = await Order.findOne({orderNo, 'shippingInfo.email' : email})
+        const order = await Order.findOne({orderNo, 'shippingInfo.email' : email, _id : req.params.id})
         
           if (!order) {
 
-            return next(new ErrorHandler("Order not found with this order number or email", 404));
+            return next(new ErrorHandler("Order not found with this order number, email or order id", 404));
           }
         
           res.status(200).json({

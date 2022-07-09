@@ -1,58 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import {useDispatch, useSelector} from 'react-redux'
-import { createNewOrderUnknownUser } from '../../@actions/orderActions/createNewOrderUnknownUser';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { unknownUserEmptyCart } from '../../@actions/unknownUserCartActions/emptyCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProductStock } from '../../@actions/productActions/updateProductStock';
 
-
-const Payment = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, contactInfo, nextStep, prevStep}) => {
-    // const {id} = useParams()
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-       const confirmOrder = async () => {
-           const shippingInfo = contactInfo
-           let shippingPrice = 0
-           if (getCartItemsUnknownUser.cart.totalPrice < 3000)
-           {
-               shippingPrice = 150
-           }
-           const paymentInfo = "COD"   // for cash on delivery
-        //   await createNewOrderForUnknownUser({shippingInfo, paymentInfo, shippingPrice})
-        
-        
-        await dispatch(createNewOrderUnknownUser({shippingInfo, paymentInfo, shippingPrice}))
-    
-        dispatch(unknownUserEmptyCart())
-         
-        //   console.log('createNewOrderUnk', createNewOrderUnk)
-        //   navigate(`/order/${createNewOrderUnk._id}`)
-        
-
+const Shipping = ({getCartItemsLoggedinUser, getCartItemsLoggedinUserSuccess, contactInfo, nextStep, prevStep}) => {
+       const dispatch = useDispatch()
+       const {updateProductStk, error} = useSelector(state => state.updateProductStk)
+       const toNextStep = async () => {
+        for (let i = 0; i < getCartItemsLoggedinUser.cart.cartItems.length; i++){
+            const id = getCartItemsLoggedinUser.cart.cartItems[i].product
+            const quantity = getCartItemsLoggedinUser.cart.cartItems[i].quantity
+           await dispatch(updateProductStock({id, quantity}))
+           console.log('quantity',quantity )
+        }
+        nextStep()
        }
-
-       const {createNewOrderUnkSuccess, createNewOrderUnk, createNewOrderUnkError, createNewOrderUnkLoading} = useSelector(state => state.createNewOrderUnk)
-
-       
        useEffect(() => {
-           if( createNewOrderUnkLoading === false) {
-               console.log('createNewOrderUnk', createNewOrderUnk)
-               navigate(`/order/${createNewOrderUnk.order._id}`)
-               window.location.reload(false)
-           }
-       }, [createNewOrderUnkLoading])
-
-       useEffect(() => {
-           if (createNewOrderUnkError) {
-               return alert('Order cannot be placed, try refreshing the page')
-           }
-       }, [createNewOrderUnkError])
-
-       
+        if (error) {
+            return alert('Order cannot be placed, as one of the product is currently unavailable!')
+        }
+    }, [error])
         return (
            <>
-           {getCartItemsUnknownUserSuccess && !createNewOrderUnkLoading &&
+           {getCartItemsLoggedinUserSuccess && 
             <Container>
             <Row>
                 <Col>
@@ -78,17 +49,17 @@ const Payment = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, conta
                                 <Row>{contactInfo.address} {contactInfo.city} {contactInfo.postalCode}, {contactInfo.province}, {contactInfo.country}, {contactInfo.phoneNo}</Row>
                                 </Col>
                             </div>
-                            
                         </Card.Body>
                     </Card>
-                    <h3 style = {{marginTop : '30px', marginBottom : '30px', fontWeight:'bold'}}>Payment Method</h3>
+                    <h3 style = {{marginTop : '30px', marginBottom : '30px', fontWeight:'bold'}}>Shipping method</h3>
                     <Card>
                         <Card.Body>
                             <div style = {{display:'flex', alignItems : 'center'}}>
                                 <div style = {{flex : '1'}}>
                                 <RadioButtonCheckedIcon />
                                 </div>
-                                <div style = {{fontWeight : 'bold', flex : '8'}}>CASH ON DELIVERY</div>
+                                <div style = {{fontWeight : 'bold', flex : '4'}}>Standard Shipping</div>
+                               {getCartItemsLoggedinUser.cart.totalPrice < 3000 ? <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs 150 </div> : <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Free Shipping </div>}
                             </div>
                             <br></br>
                             <div style = {{display:'flex', alignItems : 'center', color : 'maroon'}}>
@@ -96,14 +67,14 @@ const Payment = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, conta
                                 <RadioButtonCheckedIcon />
                                 </div>
                                 <div style = {{fontWeight : 'bold', flex : '4'}}>Total Price Including Shipping</div>
-                               {getCartItemsUnknownUser.cart.totalPrice < 3000 ? <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsUnknownUser.cart.totalPrice + 150} </div> : <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsUnknownUser.cart.totalPrice} </div>}
+                               {getCartItemsLoggedinUser.cart.totalPrice < 3000 ? <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsLoggedinUser.cart.totalPrice + 150} </div> : <div style = {{display : 'flex', justifyContent : 'right', flex : '4', fontWeight : 'bold'}}>Rs {getCartItemsLoggedinUser.cart.totalPrice} </div>}
                             </div>
                         </Card.Body>
                     </Card>
                     <br></br>
                     <div style = {{display : 'flex', justifyContent:'space-between'}}>
                         <Button variant = 'light' onClick = {prevStep}>Back</Button>
-                        <Button variant = 'dark' onClick = {confirmOrder}>Confirm Order</Button>
+                        <Button variant = 'dark' onClick = {toNextStep}>Next</Button>
                     </div>
                 </Col>
             </Row>
@@ -117,4 +88,4 @@ const Payment = ({getCartItemsUnknownUser, getCartItemsUnknownUserSuccess, conta
     // }
 };
 
-export default Payment;
+export default Shipping;
