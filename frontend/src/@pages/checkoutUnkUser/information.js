@@ -39,31 +39,7 @@ const Information = ({ setContactInfo, nextStep }) => {
     }
 
     const handleTheSubmit = ({ email, firstName, lastName, country, province, city, address, postalCode, phoneNo }) => {
-        //   const formData = new FormData()
-        //   formData.append('email', email)
-        //   formData.append('firstName', firstName)
-        //   formData.append('lastName', lastName)
-        //   formData.append('country', country)
-        //   formData.append('province', province)
-        //   formData.append('city', city)
-        //   formData.append('address', address)
-        //   formData.append('postalCode', postalCode)
-        //   formData.append('phoneNo', phoneNo)
-        //   console.log('information', formData)
-        //   setContactInfo(formData)
-        const values = {
-            firstName,
-            lastName,
-            country,
-            province,
-            email,
-            city,
-            address,
-            postalCode,
-            phoneNo
-        }
-        initialValues = values
-        setContactInfo(values)
+        setContactInfo({email, firstName, lastName, country, province, city, address, postalCode, phoneNo })
         nextStep()
     }
 

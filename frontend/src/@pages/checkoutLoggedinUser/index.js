@@ -53,7 +53,6 @@ const Checkout = ({ userDetails, getCartItemsLoggedinUser, getCartItemsLoggedinU
   }
 
 
-  const { getOrdersLoggedinUser, getOrdersLoggedinUserSuccess, getOrdersLoggedinUserLoading } = useSelector(state => state.getOrdersLoggedinUser)
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
@@ -79,19 +78,18 @@ const Checkout = ({ userDetails, getCartItemsLoggedinUser, getCartItemsLoggedinU
         }
       })
       // get logged user orders
-      dispatch(getloggedinUserOrders())
     }
 
   }, [getCartItemsLoggedinUserError, getCartItemsLoggedinUserSuccess])
   const FormData = () => {
     if (activeStep === 0) {
-      return <Information userDetails={userDetails} setContactInfo={setContactInfo} nextStep={nextStep} getOrdersLoggedinUser={getOrdersLoggedinUser} />
+      return <Information userDetails={userDetails} setContactInfo={setContactInfo} nextStep={nextStep} />
     }
     else if (activeStep === 1) {
       return <Shipping getCartItemsLoggedinUser={getCartItemsLoggedinUser} getCartItemsLoggedinUserSuccess={getCartItemsLoggedinUserSuccess} contactInfo={contactInfo} nextStep={nextStep} prevStep={backStep} />
     }
     else if (activeStep === 2) {
-      return <Payment getCartItemsLoggedinUser={getCartItemsLoggedinUser} getCartItemsLoggedinUserSuccess={getCartItemsLoggedinUserSuccess} contactInfo={contactInfo} nextStep={nextStep} prevStep={backStep} />
+      return <Payment userDetails = {userDetails} getCartItemsLoggedinUser={getCartItemsLoggedinUser} getCartItemsLoggedinUserSuccess={getCartItemsLoggedinUserSuccess} contactInfo={contactInfo} nextStep={nextStep} prevStep={backStep} />
     }
   }
   return (
@@ -164,7 +162,7 @@ const Checkout = ({ userDetails, getCartItemsLoggedinUser, getCartItemsLoggedinU
 
                     </div>
                     {/* Check if the checkoutToken is generated, then render the FormData, the react first renders the JSX then it goes to the useEffect to see if rereder is necessary */}
-                    {getOrdersLoggedinUserSuccess && <FormData />}
+                    <FormData />
                   </Row>
                 </Col>
               </Row>
@@ -252,7 +250,7 @@ const Checkout = ({ userDetails, getCartItemsLoggedinUser, getCartItemsLoggedinU
 
                     </div>
                     {/* Check if the checkoutToken is generated, then render the FormData, the react first renders the JSX then it goes to the useEffect to see if rereder is necessary */}
-                    {getOrdersLoggedinUserSuccess && <FormData />}
+                    <FormData />
                   </Row>
                 </Col>
               </Row>

@@ -34,16 +34,20 @@ import UnknownUserNewOrder from './order/unknownUserNewOrder'
 import UnknownUserGetOrder from './order/unknownUserGetOrder'
 import { getUnknownUserOrderWithOrderId } from '../@actions/orderActions/getUnknownUserOrderWithOrderId'
 import LoggedinUserOrder from './order/loggedinUserGetOrder'
+import AdminAccount from './adminAccount/account'
+import CreateProduct from './admin/createProduct'
 const MainApp = () => {
   // const navigate = useNavigate()
   // const [searchParams, setSearchParams] = useSearchParams()
   // const keyword = searchParams.get('keyword') || ''
-  const { loading, userDetails, error, isAuthenticated } = useSelector(state => state.userDetails)
+  const { loading, userDetails, error, isAuthenticated, isAdmin} = useSelector(state => state.userDetails)
   const {getCartItemsUnknownUser,getCartItemsUnknownUserSuccess, getCartItemsUnknownUserError} = useSelector(state => state.getCartItemsUnknownUser)
   const {getCartItemsLoggedinUser,getCartItemsLoggedinUserSuccess, getCartItemsLoggedinUserError} = useSelector(state => state.getCartItemsLoggedinUser)
   console.log('get cart items logged in user', getCartItemsLoggedinUser)
   console.log('loggedin user cart error', getCartItemsLoggedinUserError)
   console.log('user detaials ', userDetails)
+  // console.log('role of user is', isAdmin)
+
   const dispatch = useDispatch()
 
   // const createNewOrderForUnknownUser = async ({shippingInfo, paymentInfo, shippingPrice}) => {
@@ -74,11 +78,20 @@ const MainApp = () => {
     <>
       {loading === false &&
         <Router>
-          <Announcement />
+          {isAdmin ? <div style = {{display : 'none'}}>
+            <Announcement />
           {isAuthenticated && getCartItemsLoggedinUserSuccess ? <NavBar userDetails={userDetails} getCartItems = {getCartItemsLoggedinUser}/> : !isAuthenticated && getCartItemsUnknownUserSuccess && <NavBar userDetails={userDetails} getCartItems = {getCartItemsUnknownUser} />}
           
           {/* we have tp check the conditions carefully otherwise navbar is shown multiple times, whensoever a conditions becomes true */}
           {isAuthenticated && getCartItemsLoggedinUserError ? <NavBar2 userDetails={userDetails} cartError = {getCartItemsLoggedinUserError}/> : !isAuthenticated && getCartItemsUnknownUserError && <NavBar2 userDetails={userDetails} cartError = {getCartItemsUnknownUserError}/>}
+          </div> : 
+          <div>
+            <Announcement />
+          {isAuthenticated && getCartItemsLoggedinUserSuccess ? <NavBar userDetails={userDetails} getCartItems = {getCartItemsLoggedinUser}/> : !isAuthenticated && getCartItemsUnknownUserSuccess && <NavBar userDetails={userDetails} getCartItems = {getCartItemsUnknownUser} />}
+          
+          {/* we have tp check the conditions carefully otherwise navbar is shown multiple times, whensoever a conditions becomes true */}
+          {isAuthenticated && getCartItemsLoggedinUserError ? <NavBar2 userDetails={userDetails} cartError = {getCartItemsLoggedinUserError}/> : !isAuthenticated && getCartItemsUnknownUserError && <NavBar2 userDetails={userDetails} cartError = {getCartItemsUnknownUserError}/>}</div>
+          }
   
           <Routes>
             <Route exact path='/' element={<Home />} />
@@ -86,21 +99,23 @@ const MainApp = () => {
             <Route exact path={routePaths.category_items} element={<CategoryItems />} />
             <Route exact path={routePaths.product_detail} element={<ProductDetail userDetails={userDetails} isAuthenticated={isAuthenticated}/>} />
             <Route exact path={routePaths.searched_product} element={<SearchedProduct />} />
-            <Route exact path={routePaths.login} element={<LogIn />} />
+            <Route exact path={routePaths.login} element={<LogIn/>} />
             <Route exact path={routePaths.signup} element={<SignUp />} />
-            <Route exact path={routePaths.my_account} element={isAuthenticated === true && loading === false ? <MyAccount userDetails={userDetails}/> : <LogIn />} />
-            <Route exact path={routePaths.orders} element={isAuthenticated ? <Orders userDetails={userDetails}/> : <LogIn />} />
-            <Route exact path={routePaths.addresses} element={isAuthenticated ? <Addresses userDetails={userDetails}/> : <LogIn />} />
-            <Route exact path={routePaths.account_detail} element={isAuthenticated ? <AccountDetails userDetails={userDetails}/> : <LogIn />} />
-            <Route exact path={routePaths.edit_details} element={isAuthenticated ? <UpdateTheProfile userDetails = {userDetails}/> : <LogIn />}/>
-            <Route exact path={routePaths.password_update} element={isAuthenticated ? <UpdateThePassword userDetails = {userDetails}/> : <LogIn />}/>
+            <Route exact path={routePaths.my_account} element={!isAuthenticated ? <Navigate to = {routePaths.login} replace/> : <MyAccount userDetails={userDetails} /> } />
+            <Route exact path={routePaths.orders} element={!isAuthenticated ? <Navigate to = {routePaths.login} replace/> : <Orders userDetails={userDetails}/>} />
+            <Route exact path={routePaths.addresses} element={!isAuthenticated ? <Navigate to = {routePaths.login} replace/> : <Addresses userDetails={userDetails}/>} />
+            <Route exact path={routePaths.account_detail} element={!isAuthenticated ? <Navigate to = {routePaths.login} replace/> : <AccountDetails userDetails={userDetails}/> } />
+            <Route exact path={routePaths.edit_details} element={!isAuthenticated ? <Navigate to = {routePaths.login} replace/> :<UpdateTheProfile userDetails = {userDetails}/>}/>
+            <Route exact path={routePaths.password_update} element={!isAuthenticated ? <Navigate to = {routePaths.login} replace/> : <UpdateThePassword userDetails = {userDetails}/>}/>
             <Route exact path={routePaths.forget_password} element={<ForgetThePassword />}/>
             <Route exact path={routePaths.reset_password} element={<ResetThePassword />}/>
             <Route exact path={routePaths.mainCart} element={isAuthenticated ? <MainCartContainer2 /> : <MainCartContainer />} />
             {/* <Route exact path={routePaths.mainCart} element={<MainCartContainer2 />}/> */}
             <Route exact path={routePaths.checkout} element={isAuthenticated ? <Checkout userDetails = {userDetails} getCartItemsLoggedinUser = {getCartItemsLoggedinUser} getCartItemsLoggedinUserError = {getCartItemsLoggedinUserError} getCartItemsLoggedinUserSuccess = {getCartItemsLoggedinUserSuccess}/> : <CheckoutUnk  getCartItemsUnknownUser = {getCartItemsUnknownUser} getCartItemsUnknownUserError = {getCartItemsUnknownUserError} getCartItemsUnknownUserSuccess = {getCartItemsUnknownUserSuccess} />}/>
-            <Route exact path = {routePaths.order} element = {isAuthenticated ? <LoggedinUserOrder /> : <UnknownUserNewOrder />} />
-
+            <Route exact path = {routePaths.order} element = {<UnknownUserNewOrder />} />
+            <Route exact path = {routePaths.loggedinUserOrder} element = {<LoggedinUserOrder />} />
+            <Route exact path={routePaths.adminAccount} element = {!isAdmin ? <Navigate to = {routePaths.login} replace/> : <AdminAccount userDetails = {userDetails}/>} />
+            <Route exact path = {routePaths.createProduct} element = {!isAdmin ? <Navigate to = {routePaths.login} replace /> : <CreateProduct />} />
           </Routes>
           
         </Router>

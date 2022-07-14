@@ -2,6 +2,7 @@ const Order = require('../../models/order')
 const ErrorHandler = require('../../utils/errorHandler')
 
 exports.mySingleOrder = async(req,res,next) => {
+  console.log(req.user._id)
     try {
         const order = await Order.findOne({user : req.user._id, _id : req.params.id})
         

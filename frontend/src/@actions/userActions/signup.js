@@ -7,7 +7,7 @@ export const signUpUser = (userData) => async(dispatch) => {
         })
 
         const {data} = await apis.signup(userData)
-        await localStorage.setItem('AUTH_TOKEN', data.token)
+        await sessionStorage.setItem('AUTH_TOKEN', data.token)
         dispatch({
             type : SIGNUP_SUCCESS,
             payload : data

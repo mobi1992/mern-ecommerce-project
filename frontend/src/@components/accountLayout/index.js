@@ -19,7 +19,6 @@ const AccountLayout = ({ children }) => {
     const { logoutUser, loading, isAuthenticated, error } = useSelector(state => state.logoutUser)
     const logoutTheUser = () => {
         dispatch(logoutuser())
-        console.log('message is', logoutUser)
         window.location.reload(false)
     }
 

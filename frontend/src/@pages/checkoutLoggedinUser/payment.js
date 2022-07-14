@@ -6,7 +6,7 @@ import { createNewOrderLoggedinUser } from '../../@actions/orderActions/createNe
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {loggedinUserEmptyCart} from '../../@actions/loggedinUserCartActions/emptyCart'
 
-const Payment = ({getCartItemsLoggedinUser, getCartItemsLoggedinUserSuccess, contactInfo, nextStep, prevStep}) => {
+const Payment = ({getCartItemsLoggedinUser, getCartItemsLoggedinUserSuccess, contactInfo, nextStep, prevStep, userDetails}) => {
     // const {id} = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -35,8 +35,8 @@ const Payment = ({getCartItemsLoggedinUser, getCartItemsLoggedinUserSuccess, con
        const {createNewOrderloggedinUsr, createNewOrderloggedinUsrSuccess, createNewOrderloggedinUsrLoading, createNewOrderloggedinUsrError} = useSelector(state => state.createNewOrderloggedinUsr)
        useEffect(() => {
            if( createNewOrderloggedinUsrLoading === false) {
-               console.log('createNewOrderUnk', createNewOrderloggedinUsr)
-               navigate(`/order/${createNewOrderloggedinUsr.order._id}`)
+            //    console.log('createNewOrderUnk', createNewOrderloggedinUsr)
+               navigate(`/order/${userDetails.user.firstName}/${createNewOrderloggedinUsr.order._id}`)
                window.location.reload(false)
            }
        }, [createNewOrderloggedinUsrLoading])

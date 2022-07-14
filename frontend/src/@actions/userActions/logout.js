@@ -7,7 +7,7 @@ export const logoutuser = () => async(dispatch) => {
         })
 
         const {data} = await apis.logout()
-        await localStorage.removeItem('AUTH_TOKEN')
+        await sessionStorage.removeItem('AUTH_TOKEN')
         dispatch({
             type : LOGOUT_SUCCESS,
             payload : data

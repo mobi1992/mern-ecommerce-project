@@ -11,7 +11,6 @@ import { getUnknownUserOrderWithOrderId } from '../../@actions/orderActions/getU
 import { useParams} from 'react-router-dom'
 import { ShoppingCartOutlined } from '@material-ui/icons'
 import './index.css'
-import UnknownUserGetOrder from './unknownUserGetOrder'
 import { getloggedinUserSingleOrder } from '../../@actions/orderActions/getLoggedinUserSingleOrder'
 
 const LoggedinUserOrder = () => {
@@ -34,8 +33,9 @@ window.onpopstate = function (event) {
     setMsg('Show Order Summary')
   }
   useEffect(() => {
+    // console.log('logged in user order page..................')
     dispatch(getloggedinUserSingleOrder(id))
-  }, [])
+  }, [dispatch])
   
   const {getSingleOrderLoggedinUser, getSingleOrderLoggedinUserLoading, getSingleOrderLoggedinUserSuccess, getSingleOrderLoggedinUserError} = useSelector(state => state.getSingleOrderLoggedinUser)
   

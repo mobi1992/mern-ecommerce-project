@@ -9,7 +9,7 @@ import { routePaths } from '../../@services/constants'
 import { updateUserAddress } from '../../@actions/userActions/updateAddress'
 
 
-const Information = ({userDetails, setContactInfo, nextStep, getOrdersLoggedinUser}) => {
+const Information = ({userDetails, setContactInfo, nextStep}) => {
     console.log('userDetails', userDetails)
     let initialValues = {
         firstName: userDetails.user.firstName,
@@ -22,32 +22,7 @@ const Information = ({userDetails, setContactInfo, nextStep, getOrdersLoggedinUs
                 postalCode: userDetails.user.postalCode ? userDetails.user.postalCode : '',
                 phoneNo: userDetails.user.phoneNo ? userDetails.user.phoneNo : ''
     }
-    // if (getOrdersLoggedinUser.orders.length === 0) {
-    //     initialValues = {
-    //         firstName: userDetails.user.firstName,
-    //         lastName: userDetails.user.lastName,
-    //         country: 'Pakistan',
-    //         province: 'Punjab',
-    //         email: userDetails.user.email,
-    //         city: '',
-    //         address: '',
-    //         postalCode: '',
-    //         phoneNo: ''
-    //     }
-    // }
-    // else {
-    //     initialValues = {
-    //         firstName: userDetails.user.firstName,
-    //         lastName: userDetails.user.lastName,
-    //         country: userDetails.country,
-    //         province: userDetails.province,
-    //         email: userDetails.user.email,
-    //         city: userDetails.city,
-    //         address: userDetails.address,
-    //         postalCode: userDetails.postalCode,
-    //         phoneNo: userDetails.phoneNo
-    //     }
-    // }
+    
     const validationSchema = Yup.object({
         firstName: Yup.string().required('This Field is Required'),
         lastName: Yup.string().required('This Field is Required'),
@@ -70,30 +45,7 @@ const Information = ({userDetails, setContactInfo, nextStep, getOrdersLoggedinUs
     }
 
     const handleTheSubmit = ({ email, firstName, lastName, country, province, city, address, postalCode, phoneNo }) => {
-        //   const formData = new FormData()
-        //   formData.append('email', email)
-        //   formData.append('firstName', firstName)
-        //   formData.append('lastName', lastName)
-        //   formData.append('country', country)
-        //   formData.append('province', province)
-        //   formData.append('city', city)
-        //   formData.append('address', address)
-        //   formData.append('postalCode', postalCode)
-        //   formData.append('phoneNo', phoneNo)
-        //   console.log('information', formData)
-        //   setContactInfo(formData)
-        // const values = {
-        //     firstName,
-        //     lastName,
-        //     country,
-        //     province,
-        //     email,
-        //     city,
-        //     address,
-        //     postalCode,
-        //     phoneNo
-        // }
-        // initialValues = values
+        
         setContactInfo({email, firstName, lastName, country, province, city, address, postalCode, phoneNo })
         dispatch(updateUserAddress({country, province, city, address, postalCode, phoneNo}))
         nextStep()

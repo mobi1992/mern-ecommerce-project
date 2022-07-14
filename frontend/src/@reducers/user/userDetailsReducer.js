@@ -5,20 +5,23 @@ export const userDetailsReducer = (state = { userDetails: {} }, action) => {
         case USER_DETAILS_REQUEST:
             return {
                 loading: true,
-                userDetails : null
+                userDetails : null,
+                isAdmin : null
             }
         case USER_DETAILS_SUCCESS:
             return {
                 loading: false,
                 userDetails : action.payload,
-                isAuthenticated : true
+                isAuthenticated : true,
+                isAdmin : action.payload.isAdmin
             }
         case USER_DETAILS_FAILURE:
             return {
                 loading: false,
                 error: action.payload,
                 userDetails : null,
-                isAuthenticated : false
+                isAuthenticated : false,
+                isAdmin : null
             }
         case CLEAR_ERRORS:
             return {

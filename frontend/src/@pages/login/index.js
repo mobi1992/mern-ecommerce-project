@@ -10,6 +10,7 @@ import { Button, Card, Col, Container, Form, InputGroup, Row } from 'react-boots
 import Announcement from '../../@components/announcement'
 import NavBar from '../../@components/navBar'
 import { routePaths } from '../../@services/constants'
+import { getUserDetails } from '../../@actions/userActions/getUserDetails'
 // import {routePaths} from '../../@services'
 const initialValues = {
     email: '',
@@ -21,44 +22,64 @@ const validationSchema = Yup.object({
     password: Yup.string().min('8').required('Please enter a password with min 8 characters')
 })
 const LogIn = () => {
-     // reload the previous page when backbutton is clicked
+    // reload the previous page when backbutton is clicked
     window.onpopstate = function (event) {
         if (event) {
-           // console.log('backbutton clicked')
+            // console.log('backbutton clicked')
             // window.history.go()
             window.location.reload()
         }
     }
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { loading, user, error, isAuthenticated } = useSelector(state => state.user)
-    const logInUser =  ({ email, password }) => {
-        
-            dispatch(loginUser({ email, password }))
-            console.log('user is, ', user)
-            console.log('error is ', error)
-            // if (error){
-            //     return
-            // }
-            
+    const { loading, user, error } = useSelector(state => state.user)
+    const { isAdmin, userDetails, isAuthenticated } = useSelector(state => state.userDetails)
+    const logInUser = async ({ email, password }) => {
+
+        await dispatch(loginUser({ email, password }))
+        console.log('user is, ', user)
+        console.log('error is ', error)
+        await dispatch(getUserDetails())
+        // if (error){
+        //     return
+        // }
+
     }
-    
+
+
+
     useEffect(() => {
         if (isAuthenticated) {
-            navigate(routePaths.my_account)
-            window.location.reload(false)
+            if (userDetails.user.role === 'admin') {
+                navigate(routePaths.adminAccount)
+                window.location.reload(false)
+            }
+            else if (userDetails.user.role === 'user') {
+                navigate(routePaths.my_account)
+                window.location.reload(false)
+            }
         }
-    }, [isAuthenticated])
+        
+    }, [isAuthenticated, userDetails])
+
+    // useEffect(() => {
+    //     if(isAdmin === false) {
+    //         navigate(routePaths.my_account)
+    //         window.location.reload(false)
+    //     }
+    // }, [isAdmin])
+
+
     return (
-        <div style = {{backgroundColor : '#ffe6f0'}}>
+        <div style={{ backgroundColor: '#ffe6f0' }}>
             {/* <Announcement /> */}
             {/* <NavBar /> */}
-            <Container style = {{height : '100vh'}}>
+            <Container style={{ height: '100vh' }}>
                 <Row>
                     <Col lg='4' md='6' className='mx-auto'>
                         <Card className='mt-3'>
                             <Card.Body>
-                            {error && <p className='text-center text-danger'>{error}</p>}
+                                {error && <p className='text-center text-danger'>{error}</p>}
                                 <h1 style={{ font: '900 4vh italic' }} className='mb-3'>Login</h1>
                                 <Formik initialValues={initialValues}
                                     onSubmit={logInUser}

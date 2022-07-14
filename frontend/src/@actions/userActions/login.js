@@ -7,7 +7,7 @@ export const loginUser = ({email, password}) => async(dispatch) => {
         })
 
         const {data} = await apis.login({email, password})
-        await localStorage.setItem('AUTH_TOKEN', data.token)
+        await sessionStorage.setItem('AUTH_TOKEN', data.token)
         dispatch({
             type : LOGIN_SUCCESS,
             payload : data

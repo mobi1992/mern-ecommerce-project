@@ -6,20 +6,23 @@ export const loginReducer = (state = { user: {} }, action) => {
             return {
                 loading: true,
                 isAuthenticated : false,
-                user : null
+                user : null,
+                // isAdmin : null
             }
         case LOGIN_SUCCESS:
             return {
                 isAuthenticated : true,
                 loading: false,
-                user : action.payload
+                user : action.payload,
+                // isAdmin : action.payload.user.role
             }
         case LOGIN_FAILURE:
             return {
                 loading: false,
                 error: action.payload,
                 user : null,
-                isAuthenticated : false
+                isAuthenticated : false,
+                // isAdmin : null
             }
         case CLEAR_ERRORS:
             return {
